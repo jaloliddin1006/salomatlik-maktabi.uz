@@ -7,4 +7,7 @@ class BaseModel(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)
     
+    class Meta:
+        abstract = True
+    
     
