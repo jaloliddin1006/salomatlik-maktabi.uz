@@ -25,6 +25,7 @@ class User(AbstractUser, BaseModel):
     @property
     def full_name(self):
         return f"{self.first_name}-{self.last_name}"
+    
     @property
     def age(self):
         today = datetime.now().date()
@@ -33,6 +34,7 @@ class User(AbstractUser, BaseModel):
         day2 = today.strftime("%j")
 
         return f"{((today.year-birth_year) if day2 <= day1 else (today.year - birth_year - 1))}"
+    
     def __str__(self):  
         return f"{self.email}"
     
