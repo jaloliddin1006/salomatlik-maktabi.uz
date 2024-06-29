@@ -123,3 +123,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.User'
+
+
+DEFAULT_FROM_EMAIL = 'mamatmusayev.uz@gmail.com'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.elasticemail.com'
+EMAIL_PORT = 587  # SSL uchun 465, TLS uchun 587
+EMAIL_USE_TLS = True  # True yoki False bo'lishi mumkin
+EMAIL_HOST_USER = 'mamatmusayev.uz@gmail.com'
+EMAIL_HOST_PASSWORD = '27AB8C359D911773B7E2FC8C6EF048305B3D'

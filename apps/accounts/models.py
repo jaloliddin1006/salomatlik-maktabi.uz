@@ -41,16 +41,9 @@ class User(AbstractUser, BaseModel):
 
 email_expire_time = 5
 
-class UserResetPasswordCode(BaseModel):
-    private_id = models.UUIDField(default=uuid.uuid4, editable=False)
+class UserResetPassword(BaseModel):
     email = models.EmailField(blank=True, unique=False, null=True)
-    code = models.CharField(max_length=10, blank=True, null=True)
-    expiration_time = models.DateTimeField(null=True, blank=True)
-    is_confirmation = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.email} - {self.code}"
-    def save(self, *args, **kwargs):
-        self.expiration_time = datetime.now() + timedelta(minutes=email_expire_time)
-        return super(UserResetPasswordCode, self).save(*args, **kwargs)
+        return f"{self.email}"
     

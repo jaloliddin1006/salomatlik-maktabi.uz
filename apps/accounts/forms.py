@@ -1,11 +1,12 @@
 from django import forms
 from django.forms.widgets import TextInput, PasswordInput, EmailInput
-from .models import User, UserResetPasswordCode
-from apps.accounts.utilits import VerifyEmailCode, CODE_LENGTH
+from .models import User, UserResetPassword
+from apps.accounts.utilits import CODE_LENGTH, GenerateNewPassword, send_mail_code
+
 
 class UserRegisterForm(forms.ModelForm):
     username = forms.CharField(widget=TextInput(attrs={'placeholder':'username:'}), required=True)
-    email = forms.CharField(widget=TextInput(attrs={'placeholder':'email manzilingizni kiriting:'}), required=True)
+    email = forms.EmailField(widget=TextInput(attrs={'placeholder':'email manzilingizni kiriting:'}), required=True)
     first_name = forms.CharField(widget=TextInput(attrs={'placeholder':'ismingizni kiriting:'}), required=True)
     last_name = forms.CharField(widget=TextInput(attrs={'placeholder':'familiyangizni kiriting:'}), required=True)
     phone = forms.CharField(widget=TextInput(attrs={'placeholder':'telefon nomeringizni kiriting:'}), required=True)
@@ -21,6 +22,7 @@ class UserRegisterForm(forms.ModelForm):
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError('Bu email avval ro\'yxatdan o\'tgan, iltimos boshqa email kiriting:')
         return email
+    
     def clean_confirm_password(self):
         password1 = self.cleaned_data.get('password')
         password2 = self.cleaned_data.get('confirm_password')
@@ -48,15 +50,18 @@ class LoginForm(forms.Form):
             raise forms.ValidationError('Bo\'sh bo\'lmasligi kerak!!!')
         return self.cleaned_data
     
+    
 class UpdateUserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('email', 'first_name', 'last_name', 'phone')
-
+        
+        
 class ResetPasswordForm(forms.ModelForm):
     email = forms.EmailField(widget=TextInput(attrs={'placeholder':'emailingizni kiriting:'}), required=True)
+    
     class Meta:
-        model = UserResetPasswordCode
+        model = UserResetPassword
         fields  =('email',)
     
     def clean(self):
@@ -65,20 +70,21 @@ class ResetPasswordForm(forms.ModelForm):
         if not is_email:
             raise forms.ValidationError("Bunday emailga ega foydalanuvchi topilmadi...")
         return self.cleaned_data
+
     def save(self, commit=True):
-        code_obj = VerifyEmailCode()
-        code = code_obj.new_code()
-        verify= super().save(commit)
-        verify.code = code
-        verify.save()
-        return verify
-class CheckVerifyCodeForm(forms.Form):
-    code = forms.CharField(widget=PasswordInput(attrs={'placeholder':'code:'}), required=True)
-    def clean(self):
-        code = self.cleaned_data.get('code')
-        if not code or not code.isnumeric() or len(code)!= CODE_LENGTH:
-            raise forms.ValidationError('Kod noto\'g\'ri kiritildi')
-        return self.cleaned_data
+        email = self.cleaned_data.get('email')
+        change_pass = super().save()
+        
+        new_pass = GenerateNewPassword().new_password()
+        # send_mail_code(email, new_pass)
+        
+        print("user new password: ", new_pass)
+        user = User.objects.get(email=email)
+        user.set_password(new_pass)
+        user.save()
+
+        return change_pass
+
 
 
     

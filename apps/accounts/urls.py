@@ -1,5 +1,5 @@
 from django.urls import path
-from apps.accounts.views import UserRegisterView, LoginView, LogOutView, UpdateUserView, PasswordResetView, CheckVerifyCodeView
+from apps.accounts.views import UserRegisterView, LoginView, LogOutView, UpdateUserView, PasswordResetView
 
 app_name='accounts'
 urlpatterns = [
@@ -8,5 +8,4 @@ urlpatterns = [
     path('logout/', LogOutView.as_view(), name='logout'),
     path('update/', UpdateUserView.as_view(), name='update'),
     path('password_reset/', PasswordResetView.as_view(), name='password_reset'),
-    path('check_verify_code', CheckVerifyCodeView.as_view(), name="check_verify_code")
     ]
