@@ -1,6 +1,7 @@
 from django import forms
 from django.forms.widgets import TextInput, PasswordInput, EmailInput
-from .models import User
+from .models import User, UserResetPasswordCode
+from apps.accounts.utilits import VerifyEmailCode, CODE_LENGTH
 
 class UserRegisterForm(forms.ModelForm):
     username = forms.CharField(widget=TextInput(attrs={'placeholder':'username:'}), required=True)
@@ -52,6 +53,35 @@ class UpdateUserForm(forms.ModelForm):
         model = User
         fields = ('email', 'first_name', 'last_name', 'phone')
 
+class ResetPasswordForm(forms.ModelForm):
+    email = forms.EmailField(widget=TextInput(attrs={'placeholder':'emailingizni kiriting:'}), required=True)
+    class Meta:
+        model = UserResetPasswordCode
+        fields  =('email',)
+    
+    def clean(self):
+        email = self.cleaned_data.get('email')
+        is_email = User.objects.filter(email=email).exists()
+        if not is_email:
+            raise forms.ValidationError("Bunday emailga ega foydalanuvchi topilmadi...")
+        return self.cleaned_data
+    def save(self, commit=True):
+        code_obj = VerifyEmailCode()
+        code = code_obj.new_code()
+        verify= super().save(commit)
+        verify.code = code
+        verify.save()
+        return verify
+class CheckVerifyCodeForm(forms.Form):
+    code = forms.CharField(widget=PasswordInput(attrs={'placeholder':'code:'}), required=True)
+    def clean(self):
+        code = self.cleaned_data.get('code')
+        if not code or not code.isnumeric() or len(code)!= CODE_LENGTH:
+            raise forms.ValidationError('Kod noto\'g\'ri kiritildi')
+        return self.cleaned_data
+
+
+    
 
 
 

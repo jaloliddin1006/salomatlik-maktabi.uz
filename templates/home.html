@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>home page</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+home page
+{% endblock title %}
+{% block context %}
     <h1>welcome to home page</h1>
+    
 
     {% if user.is_authenticated %}
     {{ user.full_name  }} | {{ user.email  }}
@@ -17,5 +16,4 @@
         <a href="{% url 'accounts:login' %}">login</a>
     {% endif %}
     
-</body>
-</html>
+{% endblock context %}

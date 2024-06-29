@@ -3,9 +3,9 @@ from django.contrib import messages
 from apps.accounts.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.views import View
-from apps.accounts.forms import UserRegisterForm, LoginForm, UpdateUserForm
-
-
+from apps.accounts.forms import UserRegisterForm, LoginForm, UpdateUserForm, ResetPasswordForm, CheckVerifyCodeForm
+from .models import User, UserResetPasswordCode
+from datetime import datetime
 # Create your views here.
 
 class UserRegisterView(View):
@@ -61,6 +61,7 @@ class LoginView(View):
 class LogOutView(View):
     def get(self, request):
         logout(request)
+        messages.success(request, 'Tizimdan muvaffaqiyatli chiqdingiz...')
         return redirect('home:index')
 
 class UpdateUserView(View):
@@ -82,7 +83,35 @@ class UpdateUserView(View):
         messages.error(request, user_form.errors)
         return render(request, 'accounts/update.html', {'form':user_form})
     
+class PasswordResetView(View):
+    form_class = ResetPasswordForm
+    def get(self, request):
+        form = self.form_class()
+        context = {
+            'form':form
+        }
+        return render(request, "accounts/password_reset_form.html", context)
 
-
-
-
+class CheckVerifyCodeView(View):
+    form_class = CheckVerifyCodeForm
+    def get(self, request):
+        form=self.form_class()
+        context={
+            'form':form
+        }
+        return render(request, 'accounts/password_reset_check_verify_code.html', context)
+    def post(self, request, uuid):
+        verify_form = self.form_class(request.POST)
+        if not verify_form.is_valid():
+            messages.error(request, verify_form.errors)
+            return render(request, 'accounts/password_reset_check_verify_code.html', {'form':verify_form})
+        code = verify_form.cleaned_data.get('code')
+        verify_code=UserResetPasswordCode.objects.filter(id=uuid, expiration_time__gte=datetime.now(), is_confirmation = False, code=code).first()
+        if not verify_code:
+            messages.error(request, 'Kod noto\'g\'ri kiritildi yoki vaqti tugagan qaytadan urinib ko\'ring!!!')
+            return render(request, 'accounts/password_reset_check_verify_code.html', {'form':verify_form})
+        verify_code.is_confirmation=True
+        verify_code.save()
+        messages.success(request, 'kod to\'g\'ri kiritildi endi maxfiy kod kiriting:')
+        return redirect("accounts:password_reset_confirm", uuid=uuid)
+    

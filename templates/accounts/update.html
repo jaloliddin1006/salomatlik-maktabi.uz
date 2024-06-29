@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>home page</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Update page
+{% endblock title %}
+{% block context %}
     <h1>welcome to register page</h1>
     <form method='POST'>
         {% csrf_token %}
@@ -14,5 +12,4 @@
         <a href="/">  <button type="button" class="btn btn-info">Back</button> </a>
         
         </form >
-</body>
-</html>
+{% endblock context %}

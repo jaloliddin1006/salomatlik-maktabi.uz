@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>login page</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+login page
+{% endblock title %}
+{% block context %}
     <h1>welcome to login page</h1>
     <form method='POST'>
         {% csrf_token %}
@@ -13,5 +11,5 @@
         <input type='submit' value='Login' style="color:blue; background-color: aqua;">
         
         </form >
-</body>
-</html>
+    <a href="{% url 'accounts:password_reset' %}"><button style="color: blue;">reset password</button></a>
+{% endblock context %}

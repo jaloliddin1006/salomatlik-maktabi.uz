@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from apps.common.models import BaseModel
-from datetime import datetime
+from datetime import datetime, timedelta
+import uuid
 # Create your models here.
 USER_STATUS_CHOICES = (
     ('free', 'FREE'),
@@ -37,5 +38,19 @@ class User(AbstractUser, BaseModel):
     
     def __str__(self):  
         return f"{self.email}"
-    
+
+email_expire_time = 5
+
+class UserResetPasswordCode(BaseModel):
+    private_id = models.UUIDField(default=uuid.uuid4, editable=False)
+    email = models.EmailField(blank=True, unique=False, null=True)
+    code = models.CharField(max_length=10, blank=True, null=True)
+    expiration_time = models.DateTimeField(null=True, blank=True)
+    is_confirmation = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.email} - {self.code}"
+    def save(self, *args, **kwargs):
+        self.expiration_time = datetime.now() + timedelta(minutes=email_expire_time)
+        return super(UserResetPasswordCode, self).save(*args, **kwargs)
     
