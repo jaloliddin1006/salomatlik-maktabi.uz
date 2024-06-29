@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Update page
+{% endblock title %}
+{% block context %}
+    <h1>welcome to register page</h1>
+    <form method='POST'>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type='submit' value='Update'>
+        <a href="/">  <button type="button" class="btn btn-info">Back</button> </a>
+        
+        </form >
+{% endblock context %}

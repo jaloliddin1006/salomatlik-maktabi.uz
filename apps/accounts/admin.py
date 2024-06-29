@@ -1,5 +1,5 @@
 from django.contrib import admin
-from apps.accounts.models import User
+from apps.accounts.models import User, UserResetPasswordCode
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 # Register your models here.
 
@@ -14,3 +14,9 @@ class UserAdmin(BaseUserAdmin):
                 },
             ),
         )
+
+@admin.register(UserResetPasswordCode)
+class UserResetPasswordCodeAdmin(admin.ModelAdmin):
+    list_display = ('id', 'code', 'email', 'expiration_time', 'is_confirmation',)
+    list_display_links=('id', 'code', 'email', 'expiration_time',)
+    
