@@ -53,4 +53,4 @@ class UserResetPasswordCode(BaseModel):
     def save(self, *args, **kwargs):
         self.expiration_time = datetime.now() + timedelta(minutes=email_expire_time)
         return super(UserResetPasswordCode, self).save(*args, **kwargs)
-    
+

@@ -11,6 +11,7 @@ home page
     {{ user.full_name  }} | {{ user.email  }}
         <a href="{% url 'accounts:logout' %}">logout</a>
         <a href="{% url 'accounts:update' %}">update</a>
+        <a href="{% url 'accounts:password_change' %}">parolni yangilash</a>
     {% else %}
         <a href="{% url 'accounts:register' %}">register</a>
         <a href="{% url 'accounts:login' %}">login</a>

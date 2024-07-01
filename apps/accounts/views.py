@@ -3,7 +3,7 @@ from django.contrib import messages
 from apps.accounts.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.views import View
-from apps.accounts.forms import UserRegisterForm, LoginForm, UpdateUserForm, ResetPasswordForm, CheckVerifyCodeForm
+from apps.accounts.forms import UserRegisterForm, UpdatePasswordForm, LoginForm, UpdateUserForm, ResetPasswordForm, CheckVerifyCodeForm
 from .models import User, UserResetPasswordCode
 from datetime import datetime
 # Create your views here.
@@ -114,4 +114,6 @@ class CheckVerifyCodeView(View):
         verify_code.save()
         messages.success(request, 'kod to\'g\'ri kiritildi endi maxfiy kod kiriting:')
         return redirect("accounts:password_reset_confirm", uuid=uuid)
+           
+        
     

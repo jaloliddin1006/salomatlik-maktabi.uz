@@ -1,3 +1,4 @@
+from typing import Any
 from django import forms
 from django.forms.widgets import TextInput, PasswordInput, EmailInput
 from .models import User, UserResetPasswordCode
@@ -65,6 +66,7 @@ class ResetPasswordForm(forms.ModelForm):
         if not is_email:
             raise forms.ValidationError("Bunday emailga ega foydalanuvchi topilmadi...")
         return self.cleaned_data
+    
     def save(self, commit=True):
         code_obj = VerifyEmailCode()
         code = code_obj.new_code()
@@ -72,6 +74,7 @@ class ResetPasswordForm(forms.ModelForm):
         verify.code = code
         verify.save()
         return verify
+    
 class CheckVerifyCodeForm(forms.Form):
     code = forms.CharField(widget=PasswordInput(attrs={'placeholder':'code:'}), required=True)
     def clean(self):
@@ -79,6 +82,9 @@ class CheckVerifyCodeForm(forms.Form):
         if not code or not code.isnumeric() or len(code)!= CODE_LENGTH:
             raise forms.ValidationError('Kod noto\'g\'ri kiritildi')
         return self.cleaned_data
+
+
+
 
 
     
