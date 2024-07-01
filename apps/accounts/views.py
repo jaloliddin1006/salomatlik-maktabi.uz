@@ -3,7 +3,7 @@ from django.contrib import messages
 from apps.accounts.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.views import View
-from apps.accounts.forms import UserRegisterForm, LoginForm, UpdateUserForm, ResetPasswordForm
+from apps.accounts.forms import UserRegisterForm, LoginForm, UpdateUserForm, ResetPasswordForm, UpdatePasswordForm
 from .models import User, UserResetPassword
 from datetime import datetime
 from apps.accounts.utilits import send_mail_code
@@ -110,5 +110,27 @@ class PasswordResetView(View):
         messages.error(request, form.errors)
         return render(request, 'accounts/password_reset_form.html', {'form':form})
     
-    
+class UpdatePasswordView(View):
+    form_class = UpdatePasswordForm
+    def get(self, request):
+        if request.user.is_authenticated:
+            form = self.form_class()
+            context={
+                'form':form
+            }
+            return render(request, 'accounts/update_password.html', context)
+        
+    def post(self, request):
+        user_form = self.form_class(data=request.POST, files=request.FILES)
+        if user_form.is_valid():
+            print(request)
+            user = User.objects.filter(id=request.user.id).first()
+            user.set_password(user_form.cleaned_data.get('password_confirm'))
+            user.save()
 
+            messages.success(request, 'Parol muvaffaqiyatli yangilandi')
+            return redirect('home:index')
+        messages.error(request, user_form.errors)
+        return render(request, 'accounts:update_password.html', {'form':user_form})
+
+         
