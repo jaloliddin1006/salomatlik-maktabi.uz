@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'apps.accounts',
     'apps.home',
     'apps.common',
+    'apps.resources',
 
 ]
 
