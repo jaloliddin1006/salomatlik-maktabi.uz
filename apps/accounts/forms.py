@@ -1,3 +1,4 @@
+from typing import Any
 from django import forms
 from django.forms.widgets import TextInput, PasswordInput, EmailInput
 from .models import User, UserResetPassword
@@ -84,6 +85,21 @@ class ResetPasswordForm(forms.ModelForm):
         user.save()
 
         return change_pass
+
+class UpdatePasswordForm(forms.Form):
+    password = forms.CharField(widget=PasswordInput(attrs={'placeholder':'eski parolni kiriting:'}), required=True)
+    new_password = forms.CharField(widget=PasswordInput(attrs={'placeholder':'yangi parol kiriting:'}), required=True)
+    password_confirm = forms.CharField(widget=PasswordInput(attrs={'placeholder':'yangi parolni tasdiqlang:'}), required=True)
+
+    def clean(self):
+        password = self.cleaned_data.get('password')
+        if not password:
+            raise forms.ValidationError('Eski parolni no\'to\'g\'ri kiritdingiz. Iltimos qaytadan kiriting')
+        if self.cleaned_data.get('new_password') != self.cleaned_data.get('password_confirm'):
+            raise forms.ValidationError('Parollar bir-biriga mos kelmadi. Parollar bir xil kiritilsin.')
+        return self.cleaned_data
+
+
 
 
 
