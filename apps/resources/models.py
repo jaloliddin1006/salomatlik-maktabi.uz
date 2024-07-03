@@ -26,6 +26,15 @@ class ResourceType(BaseModel):
         verbose_name = 'Resurs turi'
         verbose_name_plural = 'Resurslar turi'
 
+class Category(BaseModel):
+    name = models.CharField(max_length=100, verbose_name='kategoriya')
+    icon = models.ImageField(upload_to='images', null=True)
+
+    def __str__(self):
+        return self.name
+    class Meta:
+        verbose_name = 'Kategoriya'
+        verbose_name_plural = 'Kategoriyalar'
 
 class Language(BaseModel):
     name = models.CharField(max_length=30, verbose_name='Til')
@@ -43,6 +52,7 @@ class Resource(BaseModel):
     file = models.FileField(upload_to='resources/', verbose_name='Fayl')
     title = models.CharField(max_length=255, verbose_name='Sarlavha')
     description = models.TextField(verbose_name='Tavsif')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
     author = models.CharField(max_length=100, verbose_name='Muallif', null=True, blank=True)
     resource_type = models.ForeignKey(ResourceType, on_delete=models.SET_NULL, null=True, verbose_name='Resurs turi')
     language = models.ForeignKey(Language, on_delete=models.SET_NULL, null=True, verbose_name='Til')

@@ -114,14 +114,14 @@ class UpdatePasswordView(View):
     form_class = UpdatePasswordForm
     def get(self, request):
         if request.user.is_authenticated:
-            form = self.form_class()
+            form = self.form_class(request.user)
             context={
                 'form':form
             }
             return render(request, 'accounts/update_password.html', context)
         
     def post(self, request):
-        user_form = self.form_class(data=request.POST, files=request.FILES)
+        user_form = self.form_class(data=request.POST, files=request.FILES, user=request.user)
         if user_form.is_valid():
             print(request)
             user = User.objects.filter(id=request.user.id).first()
@@ -131,6 +131,6 @@ class UpdatePasswordView(View):
             messages.success(request, 'Parol muvaffaqiyatli yangilandi')
             return redirect('home:index')
         messages.error(request, user_form.errors)
-        return render(request, 'accounts:update_password.html', {'form':user_form})
+        return render(request, 'accounts/update_password.html', {'form':user_form})
 
          
