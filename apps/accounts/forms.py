@@ -91,10 +91,15 @@ class UpdatePasswordForm(forms.Form):
     new_password = forms.CharField(widget=PasswordInput(attrs={'placeholder':'yangi parol kiriting:'}), required=True)
     password_confirm = forms.CharField(widget=PasswordInput(attrs={'placeholder':'yangi parolni tasdiqlang:'}), required=True)
 
-    def clean(self):
-        password = self.cleaned_data.get('password')
-        if not password:
+    def __init__(self, user, *args, **kwargs):
+        super(UpdatePasswordForm, self).__init__(*args, **kwargs)
+        self.user = user
+        
+    def clean_password(self):
+        valid = self.user.check_password(self.cleaned_data['password'])
+        if not valid:
             raise forms.ValidationError('Eski parolni no\'to\'g\'ri kiritdingiz. Iltimos qaytadan kiriting')
+    
         if self.cleaned_data.get('new_password') != self.cleaned_data.get('password_confirm'):
             raise forms.ValidationError('Parollar bir-biriga mos kelmadi. Parollar bir xil kiritilsin.')
         return self.cleaned_data
