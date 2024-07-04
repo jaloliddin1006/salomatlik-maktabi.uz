@@ -6,11 +6,11 @@ from apps.accounts.utilits import CODE_LENGTH, GenerateNewPassword, send_mail_co
 
 
 class UserRegisterForm(forms.ModelForm):
-    username = forms.CharField(widget=TextInput(attrs={'placeholder':'username:'}), required=True)
+    username = forms.CharField(widget=TextInput(attrs={'placeholder':'username:'}), required=False)
     email = forms.EmailField(widget=TextInput(attrs={'placeholder':'email manzilingizni kiriting:'}), required=True)
     first_name = forms.CharField(widget=TextInput(attrs={'placeholder':'ismingizni kiriting:'}), required=True)
     last_name = forms.CharField(widget=TextInput(attrs={'placeholder':'familiyangizni kiriting:'}), required=True)
-    phone = forms.CharField(widget=TextInput(attrs={'placeholder':'telefon nomeringizni kiriting:'}), required=True)
+    phone = forms.CharField(widget=TextInput(attrs={'placeholder':'telefon nomeringizni kiriting:'}), required=False)
     password = forms.CharField(widget=PasswordInput(attrs={'placeholder':'password:'}), required=True)
     confirm_password = forms.CharField(widget=TextInput(attrs={'placeholder':'confirm password...'}), required=True)
 
@@ -34,6 +34,7 @@ class UserRegisterForm(forms.ModelForm):
     def save(self, commit=True):
         password = self.cleaned_data.get('password')
         user = super().save(commit)
+        user.username = self.cleaned_data.get('email')
         user.set_password(password)
         user.save()
 
@@ -52,10 +53,11 @@ class LoginForm(forms.Form):
         return self.cleaned_data
     
     
+    
 class UpdateUserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name', 'phone')
+        fields = ('email', 'first_name', 'last_name', 'phone', 'birth')
         
         
 class ResetPasswordForm(forms.ModelForm):

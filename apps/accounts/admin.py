@@ -14,6 +14,7 @@ class UserAdmin(BaseUserAdmin):
                 },
             ),
         )
+    list_display = ("username", "email", "first_name", "last_name", "phone", "birth", "is_staff")
 
 @admin.register(UserResetPassword)
 class UserResetPasswordCodeAdmin(admin.ModelAdmin):
