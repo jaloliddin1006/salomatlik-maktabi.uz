@@ -4,20 +4,7 @@
 home page
 {% endblock title %}
 {% block context %}
-    <h1>welcome to home page</h1>
-    
 
-    {% if user.is_authenticated %}
-    {{ user.full_name  }} | {{ user.email  }}
-        <a href="{% url 'accounts:logout' %}">logout</a>
-        <a href="{% url 'accounts:update' %}">update</a>
-        <a href="{% url 'accounts:update_password' %}">update password</a>
-
-    {% else %}
-        <a href="{% url 'accounts:register' %}">register</a>
-        <a href="{% url 'accounts:login' %}">login</a>
-    {% endif %}
-    
 
     <div id="animation-carousel" class="relative w-full" data-carousel="slide">
         <!-- Carousel wrapper -->
