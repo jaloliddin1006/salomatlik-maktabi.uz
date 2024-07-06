@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     # apps
     'ckeditor',
     'ckeditor_uploader',
+    'rest_framework',
   
     # local apps
     'apps.accounts',

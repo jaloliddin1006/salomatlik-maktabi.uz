@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import View
-from django.http import HttpResponse
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from .models import Formula
 import types
 import math
@@ -48,3 +49,21 @@ class FormulaDetail(View):
         }
         return render(request, 'formula_detail.html', context)
         
+
+class CalculateAPI(APIView):
+    def post(self, request, id):
+        args = request.data
+        formula = Formula.objects.get(pk=id)
+        code = formula.code
+        data = dict()
+        for i in formula.variables:
+            frac, whole = math.modf(float(args.get(i)) )
+            if frac == 0:
+                data[i] = int(args.get(i))
+            else:
+                data[i] = float(args.get(i)) 
+        my_namespace = types.SimpleNamespace()
+        exec(code,  my_namespace.__dict__)
+        res = my_namespace.solution(**data)
+        return Response({'result': res})
+    

@@ -11,17 +11,61 @@ Formula
 
 
 <section class="my-16 sm:mt-16 sm:mb-28 flex mx-auto items-center sm:flex-row flex-col justify-center sm:gap-8 gap-5">
-  {{ formula.formula|safe }} 
+  {{ formula.formula|safe }} <p id='result-id'> {{ result }} </p>
   <form  method="post">
     {% csrf_token %}
     {% for var in formula.variables %}
     <p>{{var}} = <input type='text' name='{{var}}' required></p>
     
     {% endfor %}
-    <input type='submit' value='Calculate'><p>=  {{ result }}</p>
+    <br>
+    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" >Calculate</button>
+    
+
+    <button  type='submit' class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="window.location.href='/formula/'">Back</button>
   </form>
   
 </section>
 
 
 {% endblock context %}
+
+{% block script %}
+const form = document.querySelector('form');
+const resultElement = document.getElementById('result-id'); // Target the result paragraph
+
+form.addEventListener('submit', async (event) => {
+  event.preventDefault(); // Prevent default form submission
+
+  const formData = new FormData(form); // Create FormData object
+
+  try {
+    const response = await fetch('/formula/api/{{formula.id}}/', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      throw new Error(`API request failed with status ${response.status}`);
+    }
+
+    const data = await response.json(); // Parse JSON response data
+
+    resultElement.textContent = `= ${data.result}`; // Update result with calculated value
+  } catch (error) {
+    console.error('Error:', error);
+    resultElement.textContent = 'Error: An unexpected error occurred.';
+  }
+});
+
+// Optional: Handle back button click (if it doesn't navigate away)
+const backButton = document.querySelector('button[onclick^="window.location"]'); // Target button with `window.location` in click handler
+if (backButton) {
+  backButton.addEventListener('click', (event) => {
+    event.preventDefault(); // Prevent navigation (if needed)
+    // Add custom back button functionality here (e.g., redirect using history.back())
+  });
+}
+
+
+{% endblock script %}
