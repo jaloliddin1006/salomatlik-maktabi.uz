@@ -30,3 +30,8 @@ class ContactPage(View):
         }
         messages.error(request, f'Message not sent: {form.errors}')
         return render(request, 'contact.html', context)
+    
+    
+class FormulaPage(View):
+    def get(self, request):
+        return render(request, 'formula.html')
