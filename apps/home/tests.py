@@ -13,8 +13,21 @@ c = a + b
 s = sqrt(16)
 
 """
+# my_namespace = types.SimpleNamespace()
+# exec(code_string, my_namespace.__dict__)
+# print(my_namespace.c)  # 11
+# print(my_namespace.s)  # 4.0
+# print(my_namespace)  # 11
+
+a = 5
+b = 8
+formula = """
+def solution(a, b):
+    return a + b
+    
+"""
 my_namespace = types.SimpleNamespace()
-exec(code_string, my_namespace.__dict__)
-print(my_namespace.c)  # 11
-print(my_namespace.s)  # 4.0
-print(my_namespace)  # 11
+exec(formula,  my_namespace.__dict__)
+
+res = my_namespace.solution(a, b)
+print(res)  # 13
