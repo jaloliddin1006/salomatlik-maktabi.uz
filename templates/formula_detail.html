@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Formula
+{% endblock title %}
+
+
+
+{% block context %}
+
+
+<section class="my-16 sm:mt-16 sm:mb-28 flex mx-auto items-center sm:flex-row flex-col justify-center sm:gap-8 gap-5">
+  {{ formula.formula|safe }} 
+  <form  method="post">
+    {% csrf_token %}
+    {% for var in formula.variables %}
+    <p>{{var}} = <input type='text' name='{{var}}' required></p>
+    
+    {% endfor %}
+    <input type='submit' value='Calculate'><p>=  {{ result }}</p>
+  </form>
+  
+</section>
+
+
+{% endblock context %}
