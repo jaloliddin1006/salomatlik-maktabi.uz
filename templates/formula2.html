@@ -12,7 +12,7 @@ Formula
 
 <section class="my-16 sm:mt-16 sm:mb-28 flex mx-auto items-center sm:flex-row flex-col justify-center sm:gap-8 gap-5">
   {% for formula in formulas %}
-    <p><a href='{% url 'formula:detail' formula.id %}'>{{ formula.name }} {{ formula.formula|safe }} </a></p>
+    <p><a href="{% url 'formula:detail' formula.id %}">{{ formula.name }} {{ formula.formula|safe }} </a></p> | 
 
   {% endfor %}
 </section>

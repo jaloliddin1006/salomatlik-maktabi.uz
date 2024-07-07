@@ -1,4 +1,4 @@
-from html2image import Html2Image
+# from html2image import Html2Image
 
 
 # hti = Html2Image()

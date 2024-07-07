@@ -1,10 +1,10 @@
 from django.db import models
 from apps.common.models import BaseModel
+from django.utils.text import slugify
 # Create your models here.
 
-RESOURCES_PERMISSIONS = (
+RESOURCES_AUDITORIA = (
     ('all', 'Barcha uchun'),
-    ('grether', 'Kattalar uchun'),
     ('students', 'O\'quvchilar uchun'),
     ('teachers', 'O\'qituvchilar uchun')
 )
@@ -16,6 +16,7 @@ RESOURCE_STATUS = (
     
 )
 
+
 class ResourceType(BaseModel):
     name = models.CharField(max_length=30, verbose_name='Resurs turi')
     
@@ -25,16 +26,25 @@ class ResourceType(BaseModel):
     class Meta:
         verbose_name = 'Resurs turi'
         verbose_name_plural = 'Resurslar turi'
+        
 
 class Category(BaseModel):
     name = models.CharField(max_length=100, verbose_name='kategoriya')
+    slug = models.SlugField(default="", null=False)
     icon = models.ImageField(upload_to='images', null=True)
 
     def __str__(self):
         return self.name
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)   
+        super(Category, self).save(*args, **kwargs)
+             
+    
     class Meta:
         verbose_name = 'Kategoriya'
         verbose_name_plural = 'Kategoriyalar'
+        
 
 class Language(BaseModel):
     name = models.CharField(max_length=30, verbose_name='Til')
@@ -61,11 +71,23 @@ class Resource(BaseModel):
     direction = models.CharField(max_length=100, verbose_name='Yo\'nalish', null=True, blank=True)
     pages = models.PositiveIntegerField(verbose_name='Sahifalar soni', null=True, blank=True)
     keywords = models.CharField(max_length=255, verbose_name='Kalit so\'zlar', null=True, blank=True)
-    permission = models.CharField(max_length=30, choices=RESOURCES_PERMISSIONS, default='all', verbose_name='Ruxsat')
+    auditoria = models.CharField(max_length=30, choices=RESOURCES_AUDITORIA, default='all', verbose_name='Ruxsat')
     status = models.CharField(max_length=30, choices=RESOURCE_STATUS, default='free', verbose_name='Holat')
+    slug = models.SlugField(default="", null=False)
+
+    @property
+    def publish_year(self):
+        if self.year:
+            return self.year
+        return ''
 
     def __str__(self):
         return self.title
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)   
+        super(Resource, self).save(*args, **kwargs)
+            
 
     class Meta:
         verbose_name = 'Resurs'

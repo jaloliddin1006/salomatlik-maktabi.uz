@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views import View
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -17,9 +17,13 @@ class FormulaPage(View):
 
 class FormulaDetail(View):
     def get(self, request, pk):
-        formula = Formula.objects.get(pk=pk)
+        formula = Formula.objects.filter(pk=pk)
+        if not formula.exists():
+            # return render(request, '404.html')
+            return redirect('formula:formula')
+        
         context = {
-            'formula': formula
+            'formula': formula.first()
         }
         return render(request, 'formula_detail.html', context)
     
