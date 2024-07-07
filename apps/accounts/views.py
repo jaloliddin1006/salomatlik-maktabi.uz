@@ -35,7 +35,15 @@ class UserRegisterView(View):
 
 class LoginView(View):
     form_class = LoginForm
+    
     def get(self, request):
+        if request.user.is_authenticated:
+            REFFERER = request.META.get('HTTP_REFERER')
+            if REFFERER:
+                return redirect(REFFERER)
+            return redirect('home:index')
+    
+        
         form = self.form_class()
         context={
             'form':form
@@ -47,7 +55,6 @@ class LoginView(View):
         if user_form.is_valid():
             user = authenticate(request, email = user_form.cleaned_data['email'], password = user_form.cleaned_data['password'])
             if user is not None:
-                print(user)
                 login(request, user)
                 messages.success(request, 'Siz tizimga muvaffaqiyatli kirdingiz...')
                 return redirect("home:index")
@@ -55,14 +62,17 @@ class LoginView(View):
             messages.error(request, "Login yoki parol noto'g'ri!!!")
             return render(request, "accounts/login.html", {'form': user_form})
         
-
         messages.error(request, user_form.errors)
         return render(request, "accounts/login.html", {'form': user_form})
 
+
 class LogOutView(View):
     def get(self, request):
+        REFFERER = request.META.get('HTTP_REFERER')
         logout(request)
         messages.success(request, 'Tizimdan muvaffaqiyatli chiqdingiz...')
+        if REFFERER:
+            return redirect(REFFERER)
         return redirect('home:index')
 
 

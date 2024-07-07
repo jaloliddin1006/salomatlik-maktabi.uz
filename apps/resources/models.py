@@ -1,6 +1,8 @@
 from django.db import models
 from apps.common.models import BaseModel
 from django.utils.text import slugify
+from apps.resources.utils import add_watermark
+from django.core.files.base import ContentFile
 # Create your models here.
 
 RESOURCES_AUDITORIA = (
@@ -59,7 +61,8 @@ class Language(BaseModel):
 
 class Resource(BaseModel):
     photo = models.ImageField(upload_to='resources/', verbose_name='Rasm', null=True, blank=True)
-    file = models.FileField(upload_to='resources/', verbose_name='Fayl')
+    original_file = models.FileField(upload_to='pdfs/originals/', verbose_name='Fayl yuklash')
+    watermarked_file = models.FileField(upload_to='pdfs/watermarkeds/', blank=True, null=True)
     title = models.CharField(max_length=255, verbose_name='Sarlavha')
     description = models.TextField(verbose_name='Tavsif')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
@@ -87,7 +90,12 @@ class Resource(BaseModel):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)   
         super(Resource, self).save(*args, **kwargs)
-            
+
+        if self.original_file and not self.watermarked_file:
+            watermarked_pdf = add_watermark(self.original_file, 'Salomatlik Maktabi ')
+            watermarked_content = ContentFile(watermarked_pdf.read())   
+            self.watermarked_file.save(f"{self.original_file.name.split('/')[-1]}", watermarked_content)
+    
 
     class Meta:
         verbose_name = 'Resurs'

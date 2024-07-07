@@ -25,6 +25,6 @@ class ResourceAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'author','category', 'year', 'country', 'photo', 'language')
     list_display_links = ('id', 'title', 'author')
     search_fields = ('title', 'author', 'country', 'language__name' )
-    readonly_fields = ('created_at', 'updated_at', 'slug')
+    readonly_fields = ('created_at', 'updated_at', 'slug', 'watermarked_file')
     list_filter = ('category', 'language')
     

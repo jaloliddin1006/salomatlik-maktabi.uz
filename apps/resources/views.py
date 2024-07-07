@@ -10,7 +10,7 @@ class ResourceListView(ListView):
     model = Resource
     template_name = 'resources.html'
     context_object_name = 'resources'
-    paginate_by = 8
+    paginate_by = 16
     PAGINATION_URL = ''
 
     def get_queryset(self):
@@ -79,3 +79,38 @@ class ResourceDetailView(DetailView):
         context['tg_link'] = f"https://t.me/share/url?url={self.request.build_absolute_uri()}&text={self.object.title}"
         context['copy_link'] = f"{self.request.build_absolute_uri()}"
         return context
+    
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from django.http import HttpResponse
+from .models import Resource
+
+class WatermarkedFileView(APIView):
+    def get(self, request, pk):
+        if not request.user.is_authenticated:
+            return Response({'message':"Yuklab olish uchun tizimga kirishingiz kerak! "},status=status.HTTP_403_FORBIDDEN)
+        try:
+            resource = Resource.objects.get(pk=pk)
+            response = HttpResponse(resource.watermarked_file, content_type='application/pdf')
+            response['Content-Disposition'] = f'inline; filename="{resource.watermarked_file.name}"'
+            return response
+        except Resource.DoesNotExist:
+            return Response({'message': "Hech qanday ma'lumot topilmadi."}, status=status.HTTP_404_NOT_FOUND)
+
+
+class DownloadFileView(APIView):
+    def get(self, request, pk):
+        if not request.user.is_authenticated:
+            return Response({'message':"Yuklab olish uchun tizimga kirishingiz kerak! "}, status=status.HTTP_403_FORBIDDEN)
+        
+        if  request.user.status == 'free':
+            print(request.user.status)
+            return Response({'message':"Sizning yuklab olishga huquqingiz yo'q!"}, status=status.HTTP_403_FORBIDDEN)
+        try:
+            resource = Resource.objects.get(pk=pk)
+            response = HttpResponse(resource.original_file, content_type='application/pdf')
+            response['Content-Disposition'] = f'attachment; filename="{resource.original_file.name}"'
+            return response
+        except Resource.DoesNotExist:
+            return Response({'message': "Hech qanday ma'lumot topilmadi."}, status=status.HTTP_404_NOT_FOUND)
