@@ -1,5 +1,3 @@
-// const clipboard = document.getElementById('course-url');
-// const tooltip = document.getElementById("tooltip-course-url");
 const clipboard = FlowbiteInstances.getInstance('CopyClipboard', 'course-url');
 const tooltip = FlowbiteInstances.getInstance('Tooltip', 'tooltip-course-url');
 

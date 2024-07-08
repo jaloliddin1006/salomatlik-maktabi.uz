@@ -83,6 +83,7 @@ class Resource(BaseModel):
         if self.year:
             return self.year
         return ''
+    
 
     def __str__(self):
         return self.title

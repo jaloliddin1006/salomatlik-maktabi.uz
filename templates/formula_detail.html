@@ -2,16 +2,26 @@
 {% load static %}
 
 {% block title %}
-Formula
+Formula Detail
 {% endblock title %}
+
+{% block extrahead %}
+<script>
+  MathJax = {
+    loader: {load: ['input/asciimath', 'output/chtml']}
+  } 
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js">
+  </script>
+{% endblock extrahead %}
 
 
 
 {% block context %}
-
-
 <section class="my-16 sm:mt-16 sm:mb-28 flex mx-auto items-center sm:flex-row flex-col justify-center sm:gap-8 gap-5">
   {{ formula.formula|safe }} <p id='result-id'> {{ result }} </p>
+  <p>{{ formula.get_formula }}</p>
   <form  method="post">
     {% csrf_token %}
     {% for var in formula.variables %}

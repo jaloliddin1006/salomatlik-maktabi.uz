@@ -1,17 +1,19 @@
 {% extends "base.html" %}
 {% load static %}
-{% load custom_filters %}
+
 {% block title %}
-Formula
+My Favourite
 {% endblock title %}
+
+{% block extrahead %}
+{% endblock extrahead %}
 
 
 
 {% block context %}
 
-
 <div class="relative pt-2 lg:pt-2 min-h-screen max-w-screen-xl mx-auto p-4 sm:mb-8 mb-4">
-    <h1 class="common_title">Qo'llanmalar</h1>
+    <h1 class="common_title">Tanlanganlar</h1>
     <div class="max-w-screen-xl mx-auto p-2 mb-10 rounded-xl shadow-[0_2px_10px_-3px_rgba(6,0,0,0.3)]">
       <form class="w-full mx-auto flex gap-4 items-center justify-between sm:flex-row flex-col search_component">
 
@@ -64,18 +66,18 @@ Formula
       <div class="w-full bg-white bg-opacity-40 backdrop-filter backdrop-blur-lg">
         <div class="w-12/12 mx-auto rounded-2xl bg-white bg-opacity-40 backdrop-filter backdrop-blur-lg">
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 text-center mx-auto">
-            {% for resource in resources %}
+            {% for resource in favourites %}
                 <article
                 class="bg-white p-5 shadow transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-lg cursor-pointer border">
                 <a target="_self" href="./details.html" class="absolute opacity-0 top-0 right-0 left-0 bottom-0"></a>
                 <div class="relative mb-4 rounded-lg">
                     <img
                     class="h-72 rounded-lg w-full object-cover transition-transform duration-300 transform group-hover:scale-105"
-                    {% if resource.photo %}src="{{ resource.photo.url }}" {% else %}src="{% static 'img/no-image.png' %}" {% endif %}
+                    {% if resource.resource.photo %}src="{{ resource.resource.photo.url }}" {% else %}src="{% static 'img/no-image.png' %}" {% endif %}
                     alt="" />
 
                     <a class="flex justify-center items-center bg-slate-700 bg-opacity-80 z-10 absolute top-0 left-0 w-full h-full text-white rounded-2xl opacity-0 transition-all duration-300 transform group-hover:scale-105 text-xl group-hover:opacity-100"
-                    href="{% url 'resources:resource-detail' resource.slug %}" target="_self" rel="noopener noreferrer">
+                    href="{% url 'resources:resource-detail' resource.resource.slug %}" target="_self" rel="noopener noreferrer">
                     Read article
                     <svg class="ml-2 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
@@ -85,7 +87,7 @@ Formula
                     </a>
 
                     <div class="absolute top-0 right-0 text-white bg-login rounded-md px-3 py-1">
-                    <p>{{ resource.resource_type }}</p>
+                    <p>{{ resource.resource.resource_type }}</p>
                     </div>
                 </div>
                 <div class="relative">
@@ -94,17 +96,17 @@ Formula
                         <div class="flex flex-1">
                         <div class="flex gap-2">
                             <p style="color: #818b96ff" class="text-sm font-semibold">
-                                {{ resource.author }}
+                                {{ resource.resource.author }}
                             </p>
                             <p style="color: #818b96ff" class="text-sm font-medium">
-                                {{ resource.publish_year }}
+                                {{ resource.resource.publish_year }}
                             </p>
                         </div>
                         </div>
                     </div>
                     <div class="flex justify-end">
                         <div class="text-sm flex items-center gap-1 text-gray-500">
-                        <img class="ml-1 w-4 h-4" src="{% static 'img/eye.png' %}" alt="" />
+                        <img class="ml-1 w-4 h-4" src="./img/eye.png" alt="" />
                         <p>15</p>
                         </div>
                     </div>
@@ -112,18 +114,17 @@ Formula
                     <h3 class="font-medium two_line text-lg text-start pr-[35px] leading-8">
                     <a href="./details.html"
                         class="block relative group-hover:text-login transition-colors duration-200">
-                        {{ resource.title }}
+                        {{ resource.resource.title }}
                     </a>
                     </h3>
                     <div onclick="addOrRemoveFavourite({{ resource.id }})"
-                            class="absolute bottom-0 right-0 inline-flex items-center justify-center rounded-lg bg-white p-2 shadow-md">
-                        <svg xmlns="http://www.w3.org/2000/svg"  fill="{%  if resource.id in favorites %}#ff0000{% else %}#fff{% endif %}" viewBox="0 0 24 24" stroke-width="1.5" id="like-icon-{{ resource.id }}"
-                                stroke="#000" class="h-6 w-6 text-red-700">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
-                        </svg>
-                    </div>
-               
+                    class="absolute bottom-0 right-0 inline-flex items-center justify-center rounded-lg bg-white p-2 shadow-md">
+                <svg xmlns="http://www.w3.org/2000/svg"  fill="#ff0000" viewBox="0 0 24 24" stroke-width="1.5" id="like-icon-{{ resource.id }}"
+                        stroke="#000" class="h-6 w-6 text-red-700">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
+                </svg>
+            </div>
                 </div>
                 </article>
             {% endfor %}
@@ -168,9 +169,11 @@ Formula
 </div>
 
 
-  {% endblock context %}
+{% endblock context %}
 
-  
+
+
+
 {% block addscript %}
 <script src="{% static 'js/main.js' %}"></script>
 {% endblock addscript %}

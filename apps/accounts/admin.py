@@ -14,7 +14,27 @@ class UserAdmin(BaseUserAdmin):
                 },
             ),
         )
-    list_display = ("username", "email", "first_name", "last_name", "phone", "birth", "is_staff")
+    fieldsets = (
+        (None, {"fields": ("username", "password")}),
+        (("Personal info"), {"fields": ("first_name", "last_name", "email" , "phone", "birth",  "photo")}),
+        (
+            ("Permissions"),
+            {
+                "fields": (
+                    "status",
+                    "is_active",
+                    "is_staff",
+                    "is_superuser",
+                    "groups",
+                    "user_permissions",
+                ),
+            },
+        ),
+        (("Important dates"), {"fields": ("last_login", "date_joined")}),
+    )
+    list_display = ("username", "email", "first_name", "last_name", "phone", "birth","status", "is_staff")
+    list_editable = ("status", )
+
 
 @admin.register(UserResetPassword)
 class UserResetPasswordCodeAdmin(admin.ModelAdmin):

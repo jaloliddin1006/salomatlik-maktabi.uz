@@ -42,7 +42,7 @@ class ResourceListView(ListView):
         if filter_by_auditoriya:
             self.PAGINATION_URL += f'&auditoria={filter_by_auditoriya}'
             queryset = queryset.filter(auditoria=filter_by_auditoriya)
-            
+        
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -54,18 +54,25 @@ class ResourceListView(ListView):
         context['filter_by_auditoriya'] = self.request.GET.get('auditoria', '') 
         context['pagination_url'] = self.PAGINATION_URL
         
-        
         # Get paginated queryset
         resources = self.object_list
         paginator = Paginator(resources, self.paginate_by)
         page_number = self.request.GET.get('page', 1)  # Get current page from GET
         page_obj = paginator.get_page(page_number)
+        
+        if self.request.user.is_authenticated:
+            # favorites = {f"{resource.id}": resource.is_favourited(resource, self.request.user) for resource in resources}
+            favorites = list(self.request.user.favourites.all().values_list('resource_id', flat=True))
+        else:
+            favorites = []
+        context['favorites'] = favorites
 
         # Update context with pagination information
         context['page_obj'] = page_obj
         context['is_paginated'] = paginator.num_pages > 1
 
         return context
+    
     
 class ResourceDetailView(DetailView):
     model = Resource
@@ -79,6 +86,7 @@ class ResourceDetailView(DetailView):
         context['tg_link'] = f"https://t.me/share/url?url={self.request.build_absolute_uri()}&text={self.object.title}"
         context['copy_link'] = f"{self.request.build_absolute_uri()}"
         return context
+    
     
 from rest_framework.views import APIView
 from rest_framework.response import Response
