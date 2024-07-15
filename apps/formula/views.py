@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.views import View
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -12,18 +12,17 @@ class FormulaPage(View):
         context = {
             'formulas': Formula.objects.all()
         }
-        return render(request, 'formula2.html', context)
+        return render(request, 'formula-list.html', context)
     
 
 class FormulaDetail(View):
     def get(self, request, pk):
-        formula = Formula.objects.filter(pk=pk)
-        if not formula.exists():
-            # return render(request, '404.html')
-            return redirect('formula:formula')
+        formula = get_object_or_404(Formula, pk=pk)
+        other_formulas = Formula.objects.exclude(pk=pk)
         
         context = {
-            'formula': formula.first()
+            'formula': formula,
+            'formulas': other_formulas
         }
         return render(request, 'formula_detail.html', context)
     
@@ -56,6 +55,7 @@ class FormulaDetail(View):
 
 class CalculateAPI(APIView):
     def post(self, request, id):
+        print(request.data)
         args = request.data
         formula = Formula.objects.get(pk=id)
         code = formula.code

@@ -3,6 +3,7 @@ from apps.common.models import BaseModel
 from django.utils.text import slugify
 from apps.resources.utils import add_watermark
 from django.core.files.base import ContentFile
+from django.core.validators import FileExtensionValidator
 # Create your models here.
 
 RESOURCES_AUDITORIA = (
@@ -61,7 +62,8 @@ class Language(BaseModel):
 
 class Resource(BaseModel):
     photo = models.ImageField(upload_to='resources/', verbose_name='Rasm', null=True, blank=True)
-    original_file = models.FileField(upload_to='pdfs/originals/', verbose_name='Fayl yuklash')
+    original_file = models.FileField(upload_to='pdfs/originals/', verbose_name='Fayl yuklash', 
+                                     validators=[FileExtensionValidator(allowed_extensions=['pdf'])])
     watermarked_file = models.FileField(upload_to='pdfs/watermarkeds/', blank=True, null=True)
     title = models.CharField(max_length=255, verbose_name='Sarlavha')
     description = models.TextField(verbose_name='Tavsif')
@@ -77,6 +79,7 @@ class Resource(BaseModel):
     auditoria = models.CharField(max_length=30, choices=RESOURCES_AUDITORIA, default='all', verbose_name='Ruxsat')
     status = models.CharField(max_length=30, choices=RESOURCE_STATUS, default='free', verbose_name='Holat')
     slug = models.SlugField(default="", null=False)
+    views = models.PositiveIntegerField(default=0, verbose_name='Ko\'rishlar soni')
 
     @property
     def publish_year(self):

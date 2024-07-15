@@ -137,6 +137,8 @@ class UpdatePasswordView(View):
             user = User.objects.filter(id=request.user.id).first()
             user.set_password(user_form.cleaned_data.get('password_confirm'))
             user.save()
+            
+            login(request, user)
 
             messages.success(request, 'Parol muvaffaqiyatli yangilandi')
             return redirect('home:index')

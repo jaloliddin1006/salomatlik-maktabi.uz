@@ -464,23 +464,23 @@ canvas { display: block; margin: auto; }
           class="w-12/12 mx-auto rounded-2xl bg-white bg-opacity-40 backdrop-filter backdrop-blur-lg"
         >
           <div            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 text-center mx-auto">
-            {% for resource in mostResources %}
+            {% for res in mostResources %}
             <article              class="bg-white p-5 shadow transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-lg cursor-pointer border"  >
               <a
                 target="_self"
-                href="{% url 'resources:resource-detail' resource.slug %}"
+                href="{% url 'resources:resource-detail' res.slug %}"
                 class="absolute opacity-0 top-0 right-0 left-0 bottom-0"
               ></a>
               <div class="relative mb-4 rounded-lg">
                 <img
                   class="h-72 rounded-lg w-full object-cover transition-transform duration-300 transform group-hover:scale-105"
-                  {% if resource.photo %}src="{{ resource.photo.url }}" {% else %}src="{% static 'img/no-image.png' %}" {% endif %}
+                  {% if res.photo %}src="{{ res.photo.url }}" {% else %}src="{% static 'img/no-image.png' %}" {% endif %}
                   alt=""
                 />
 
                 <a
                   class="flex justify-center items-center bg-slate-700 bg-opacity-80 z-10 absolute top-0 left-0 w-full h-full text-white rounded-2xl opacity-0 transition-all duration-300 transform group-hover:scale-105 text-xl group-hover:opacity-100"
-                  href="{% url 'resources:resource-detail' resource.slug %}"
+                  href="{% url 'resources:resource-detail' res.slug %}"
                   target="_self"
                   rel="noopener noreferrer"
                 >
@@ -504,7 +504,7 @@ canvas { display: block; margin: auto; }
                 <div
                   class="absolute top-0 right-0 text-white bg-login rounded-md px-3 py-1"
                 >
-                  <p>{{ resource.resource_type }}</p>
+                  <p>{{ res.resource_type }}</p>
                 </div>
               </div>
               <div class="relative">
@@ -516,13 +516,13 @@ canvas { display: block; margin: auto; }
                           style="color: #818b96ff"
                           class="text-sm font-semibold"
                         >
-                          {{ resource.author }}
+                          {{ res.author }}
                         </p>
                         <p
                           style="color: #818b96ff"
                           class="text-sm font-medium"
                         >
-                          {{ resource.publish_year }}
+                          {{ res.publish_year }}
                         </p>
                       </div>
                     </div>
@@ -547,20 +547,21 @@ canvas { display: block; margin: auto; }
                     href="./details.html"
                     class="block relative group-hover:text-login transition-colors duration-200"
                   >
-                    {{ resource.title }}
+                    {{ res.title }}
                   </a>
                 </h3>
                 <div
-                  onclick="onHandle()"
+                  onclick="addOrRemoveFavourite({{ res.id }})"
                   class="absolute bottom-0 right-0 inline-flex items-center justify-center rounded-lg bg-white p-2 shadow-md"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    fill="#f00"
+                     fill="{%  if res.id in favorites %}#ff0000{% else %}#fff{% endif %}"
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="#000"
                     class="h-6 w-6 text-red-700"
+                    id="like-icon-{{ res.id }}"
                   >
                     <path
                       stroke-linecap="round"
@@ -584,6 +585,7 @@ canvas { display: block; margin: auto; }
 {% block addscript %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
 <script src="{% static 'js/copy.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
 {% endblock addscript %}
 
 
@@ -665,3 +667,4 @@ close_book_btn.addEventListener("click", () => {
 
 
 {% endblock script %}
+

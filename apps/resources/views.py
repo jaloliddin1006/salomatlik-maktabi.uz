@@ -14,7 +14,7 @@ class ResourceListView(ListView):
     PAGINATION_URL = ''
 
     def get_queryset(self):
-        queryset = Resource.objects.filter(is_active=True)  # Base queryset
+        queryset = Resource.objects.filter(is_active=True).order_by('-id')  # Base queryset
 
         # Get search query from request.GET (modify as needed)
         search_query = self.request.GET.get('search', '')
@@ -85,6 +85,13 @@ class ResourceDetailView(DetailView):
         context['mostResources'] = Resource.objects.filter(category=self.object.category).exclude(id=self.object.id).order_by('?')[:4]
         context['tg_link'] = f"https://t.me/share/url?url={self.request.build_absolute_uri()}&text={self.object.title}"
         context['copy_link'] = f"{self.request.build_absolute_uri()}"
+        if self.request.user.is_authenticated:
+            # favorites = {f"{resource.id}": resource.is_favourited(resource, self.request.user) for resource in resources}
+            favorites = list(self.request.user.favourites.all().values_list('resource_id', flat=True))
+            print(favorites)
+        else:
+            favorites = []
+        context['favorites'] = favorites
         return context
     
     

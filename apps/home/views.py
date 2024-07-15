@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 from apps.home.forms import ContactForm
 from django.contrib import messages
 from apps.resources.models import Resource, ResourceType
@@ -130,5 +130,19 @@ class MyFavouriteView(ListView):
         context['page_obj'] = page_obj
         context['is_paginated'] = paginator.num_pages > 1
 
+        if self.request.user.is_authenticated:
+            # favorites = {f"{resource.id}": resource.is_favourited(resource, self.request.user) for resource in resources}
+            favorites = list(self.request.user.favourites.all().values_list('resource_id', flat=True))
+        else:
+            favorites = []
+        context['favorites'] = favorites
+        
         return context
     
+
+class PremiumPage(View):
+
+    def get(self, request):
+        context = {
+        }
+        return render(request, 'premium.html', context)
