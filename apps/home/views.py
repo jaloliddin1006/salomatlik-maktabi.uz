@@ -109,7 +109,7 @@ class MyFavouriteView(ListView):
             self.PAGINATION_URL += f'&auditoria={filter_by_auditoriya}'
             queryset = queryset.filter(aresource__uditoria=filter_by_auditoriya)
             
-        return queryset
+        return queryset.order_by('-id')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -130,11 +130,8 @@ class MyFavouriteView(ListView):
         context['page_obj'] = page_obj
         context['is_paginated'] = paginator.num_pages > 1
 
-        if self.request.user.is_authenticated:
-            # favorites = {f"{resource.id}": resource.is_favourited(resource, self.request.user) for resource in resources}
-            favorites = list(self.request.user.favourites.all().values_list('resource_id', flat=True))
-        else:
-            favorites = []
+        favorites = list(self.request.user.favourites.all().values_list('resource_id', flat=True))
+        print(favorites)
         context['favorites'] = favorites
         
         return context

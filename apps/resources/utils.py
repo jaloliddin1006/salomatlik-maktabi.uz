@@ -1,62 +1,3 @@
-# import io
-# from PyPDF2 import PdfReader, PdfWriter
-# from reportlab.pdfgen import canvas
-# from reportlab.lib.pagesizes import letter
-
-
-# def add_watermark(input_pdf, watermark_text):
-#     output_pdf = io.BytesIO()
-#     packet = io.BytesIO()
-
-#     # Get the dimensions of the first page of the input PDF
-#     reader = PdfReader(input_pdf)
-#     first_page = reader.pages[0]
-#     mediabox = first_page.mediabox
-#     page_width = mediabox[2] - mediabox[0]
-#     page_height = mediabox[3] - mediabox[1]
-
-#     print(page_width, page_height)
-#     # Calculate center position
-#     x = int(float(page_width) * 0.15)
-#     y = int(float(page_height) * 0.12)
-
-#     # Create a PDF with the watermark text
-#     can = canvas.Canvas(packet, pagesize=(page_width, page_height))
-#     can.setFont("Times-Roman", int(page_height / 6))  # Adjust font size as needed
-#     can.setFillColorRGB(0.216, 0.078, 0.078, alpha=0.3)
-
-#     # Rotate the canvas for the text
-#     can.saveState()
-#     can.translate(x, y)
-#     can.rotate(45)  # Rotate as desired
-#     can.drawString(0, 0, watermark_text)
-#     can.restoreState()
-
-#     can.save()
-
-#     packet.seek(0)
-#     watermark = PdfReader(packet)
-#     watermark_page = watermark.pages[0]
-
-#     # Read the input PDF
-#     input_pdf.seek(0)
-#     reader = PdfReader(input_pdf)
-#     writer = PdfWriter()
-
-#     # Add watermark to each page
-#     for page_num in range(len(reader.pages)):
-#         page = reader.pages[page_num]
-#         page.merge_page(watermark_page)
-#         writer.add_page(page)
-
-#     # Write the final output PDF
-#     writer.write(output_pdf)
-#     output_pdf.seek(0)
-#     return output_pdf
-
-
-
-
 import io
 from PyPDF2 import PdfReader, PdfWriter
 from reportlab.pdfgen import canvas
@@ -80,7 +21,7 @@ def add_watermark(input_pdf, watermark_text):
 
     # Create a PDF with the watermark text
     can = canvas.Canvas(packet, pagesize=(page_width, page_height))
-    can.setFont("Times-Roman", int(page_height / 12))  # Adjust font size as needed
+    can.setFont("Times-Roman", min(int(page_height / 12), int(page_width / 12)))  # Adjust font size as needed
     can.setFillColorRGB(0.216, 0.078, 0.078, alpha=0.2)
 
     # Rotate the canvas for the text

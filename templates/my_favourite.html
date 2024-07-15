@@ -66,18 +66,18 @@ My Favourite
       <div class="w-full bg-white bg-opacity-40 backdrop-filter backdrop-blur-lg">
         <div class="w-12/12 mx-auto rounded-2xl bg-white bg-opacity-40 backdrop-filter backdrop-blur-lg">
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 text-center mx-auto">
-            {% for resource in favourites %}
+            {% for favourite in favourites %}
                 <article
                 class="bg-white p-5 shadow transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-lg cursor-pointer border">
                 <a target="_self" href="./details.html" class="absolute opacity-0 top-0 right-0 left-0 bottom-0"></a>
                 <div class="relative mb-4 rounded-lg">
                     <img
                     class="h-72 rounded-lg w-full object-cover transition-transform duration-300 transform group-hover:scale-105"
-                    {% if resource.resource.photo %}src="{{ resource.resource.photo.url }}" {% else %}src="{% static 'img/no-image.png' %}" {% endif %}
+                    {% if favourite.resource.photo %}src="{{ favourite.resource.photo.url }}" {% else %}src="{% static 'img/no-image.png' %}" {% endif %}
                     alt="" />
 
                     <a class="flex justify-center items-center bg-slate-700 bg-opacity-80 z-10 absolute top-0 left-0 w-full h-full text-white rounded-2xl opacity-0 transition-all duration-300 transform group-hover:scale-105 text-xl group-hover:opacity-100"
-                    href="{% url 'resources:resource-detail' resource.resource.slug %}" target="_self" rel="noopener noreferrer">
+                    href="{% url 'resources:resource-detail' favourite.resource.slug %}" target="_self" rel="noopener noreferrer">
                     Read article
                     <svg class="ml-2 w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
@@ -87,7 +87,7 @@ My Favourite
                     </a>
 
                     <div class="absolute top-0 right-0 text-white bg-login rounded-md px-3 py-1">
-                    <p>{{ resource.resource.resource_type }}</p>
+                    <p>{{ favourite.resource.resource_type }}</p>
                     </div>
                 </div>
                 <div class="relative">
@@ -96,10 +96,10 @@ My Favourite
                         <div class="flex flex-1">
                         <div class="flex gap-2">
                             <p style="color: #818b96ff" class="text-sm font-semibold">
-                                {{ resource.resource.author }}
+                                {{ favourite.resource.author }}
                             </p>
                             <p style="color: #818b96ff" class="text-sm font-medium">
-                                {{ resource.resource.publish_year }}
+                                {{ favourite.resource.publish_year }}
                             </p>
                         </div>
                         </div>
@@ -114,16 +114,16 @@ My Favourite
                     <h3 class="font-medium two_line text-lg text-start pr-[35px] leading-8">
                     <a href="./details.html"
                         class="block relative group-hover:text-login transition-colors duration-200">
-                        {{ resource.resource.title }}
+                        {{ favourite.resource.title }}
                     </a>
                     </h3>
-                    <div onclick="addOrRemoveFavourite({{ resource.id }})"
+                    <div onclick="addOrRemoveFavourite({{ favourite.resource.id }})"
                     class="absolute bottom-0 right-0 inline-flex items-center justify-center rounded-lg bg-white p-2 shadow-md">
                 <svg xmlns="http://www.w3.org/2000/svg"  
-                        fill="{%  if resource.id in favorites %}#ff0000{% else %}#fff{% endif %}" 
+                        fill="{%  if favourite.resource.id in favorites %}#ff0000{% else %}#fff{% endif %}" 
                         viewBox="0 0 24 24" 
                         stroke-width="1.5" 
-                        id="like-icon-{{ resource.id }}"
+                        id="like-icon-{{ favourite.resource.id }}"
                         stroke="#000" class="h-6 w-6 text-red-700">
 
                     <path stroke-linecap="round" stroke-linejoin="round"
