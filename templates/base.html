@@ -348,7 +348,7 @@
                 <h4 class="font-semibold text-gray-100 uppercase">
                   Obuna bo'lish
                 </h4>
-                <form class="mt-6 grid space-y-3"  method="POST">
+                <form class="mt-6 grid space-y-3"  method="POST" action="{% url 'home:subscribe' %}">
                   {% csrf_token %}
                   <div class="relative z-0 w-full mb-5 group">
                     <input type="email" name="emailmanzil" id="floating_email"

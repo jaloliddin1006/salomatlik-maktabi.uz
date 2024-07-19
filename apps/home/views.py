@@ -4,7 +4,7 @@ from django.views.generic import ListView, TemplateView
 from apps.home.forms import ContactForm, SubscribeForm
 from django.contrib import messages
 from apps.resources.models import Resource, ResourceType
-from apps.home.models import Favourite
+from apps.home.models import Favourite, Subscribe
 # Create your views here.
 from django.db.models import Q 
 from django.core.paginator import Paginator
@@ -37,22 +37,17 @@ class ContactPage(View):
         return render(request, 'contact.html', context)
 
 class SubscribeView(View):
-   
     def post(self, request):
-        form = SubscribeForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Siz muvaffaqiyatli obuna bo\'ldingiz')
-            return redirect('home:index')
         
-        context = {
-            'form': form
-        }
-        messages.error(request, 'Siz obuna bo\'la olmadingiz iltimos qaytadan urinib ko\'ring')
+        data = request.POST
+        obuna = Subscribe()
+        print(obuna)
+        obuna.email = data.get('emailmanzil')
+        
+        obuna.save()
+        messages.success(self.request, 'Siz muvaffaqiyatli obuna bo\'ldingiz')
         return redirect('home:index')
-       
     
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
