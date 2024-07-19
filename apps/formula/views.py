@@ -6,7 +6,17 @@ from .models import Formula
 import types
 import math
 # Create your views here.
-
+#  def get(self, request, id):
+#         r_type = ResourceType.objects.filter(is_active = True, id=id).first()
+        
+#         resources = Resource.objects.filter(is_active = True, resource_type = r_type)
+#         context={
+#             'r_type':r_type,
+#             'resources':resources,
+            
+#         }
+#         return render(request, 'resources.html', context)
+    
 class FormulaPage(View):
     def get(self, request):
         context = {

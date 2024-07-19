@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views import View
 from django.views.generic import ListView, TemplateView
-from apps.home.forms import ContactForm
+from apps.home.forms import ContactForm, SubscribeForm
 from django.contrib import messages
 from apps.resources.models import Resource, ResourceType
 from apps.home.models import Favourite
@@ -35,7 +35,22 @@ class ContactPage(View):
         }
         messages.error(request, f'Message not sent: {form.errors}')
         return render(request, 'contact.html', context)
-    
+
+class SubscribeView(View):
+   
+    def post(self, request):
+        form = SubscribeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Siz muvaffaqiyatli obuna bo\'ldingiz')
+            return redirect('home:index')
+        
+        context = {
+            'form': form
+        }
+        messages.error(request, 'Siz obuna bo\'la olmadingiz iltimos qaytadan urinib ko\'ring')
+        return redirect('home:index')
+       
     
 
 from rest_framework.views import APIView

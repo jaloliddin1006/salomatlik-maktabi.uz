@@ -1,5 +1,5 @@
-from apps.resources.models import Category
-
+from apps.resources.models import Category, Resource, ResourceType
+from apps.formula.models import Formula
 def categories(request):
     # print(request.META.get('HTTP_HOST'))
     # print(request.META.get('HTTP_USER_AGENT'))
@@ -31,7 +31,13 @@ def categories(request):
     
     # print("-------------------")
     context = {
-        'categories': Category.objects.all()
+        'categories': Category.objects.all(),
+        'ten_famous_categories':Category.objects.all().order_by('?')[:10],
+        'category_resources':Resource.objects.all().filter(),
+        'type_resources':ResourceType.objects.all(),
+        'random_four_resource_types':ResourceType.objects.all().order_by('?')[:5],
+        'random_20_formulalar':Formula.objects.all().order_by('?')[:20]
+        
     }
     return context
 
