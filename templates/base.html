@@ -133,6 +133,7 @@
                         </a>
                       </li>
                       {% for ctg in categories %}
+                     
                         <li>
                           <a href="/resources/?category={{ctg.slug}}" class="text-gray-500 dark:text-gray-400 hover:text-login dark:hover:text-blue-500">
                             {{ ctg.name }}
@@ -271,7 +272,7 @@
                     maktabi</span>
                 </a>
                 <p class="text-white mt-6">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quia voluptatibus dolorum.
+                  Salomatlik maktabi nomli online platformamizga xush kelibsiz! Bu saytda siz o'zingiz uchun foydali bo'lishi mumkin bo'lgan tibbiyotga oid qimmatli ma'lumotlar manbaiga ega bo'lishingiz va tanishib chiqishingiz mumkin
                 </p>
               </div>
               <div class="col-span-1">
@@ -280,13 +281,13 @@
                 </h4>
                 <div class="mt-6 grid space-y-3">
                   <p>
-                    <a href="./index.html"
+                    <a href="/"
                       class="inline-flex gap-x-2 transition-all text-white hover:text-gray-200 hover:pl-2">
                       Asosiy sahifa
                     </a>
                   </p>
                   <p>
-                    <a href="./cards.html"
+                    <a href="{% url 'resources:resource-list' %}"
                       class="inline-flex gap-x-2 text-white hover:text-gray-200 transition-all hover:pl-2">
                       Qo'llanmalar
                     </a>
@@ -309,29 +310,48 @@
                 <h4 class="font-semibold text-gray-100 uppercase">
                   Foydalanish uchun
                 </h4>
+                {% if not user.is_authenticated %}
                 <div class="mt-6 grid space-y-3">
                   <p>
-                    <a class="inline-flex gap-x-2 text-white hover:text-gray-200 transition-all hover:pl-2" href="#">
+                    <a class="inline-flex gap-x-2 text-white hover:text-gray-200 transition-all hover:pl-2" href="{% url 'accounts:register' %}">
                       Ro'yxatdan o'tish
                     </a>
                   </p>
                   <p>
-                    <a class="inline-flex gap-x-2 text-white hover:text-gray-200 transition-all hover:pl-2" href="#">
+                    <a class="inline-flex gap-x-2 text-white hover:text-gray-200 transition-all hover:pl-2" href="{% url 'accounts:login' %}">
                       Kirish
                     </a>
                   </p>
                   <p class="text-white hover:text-gray-200">
-                    BOG'LANISH UCHUN: +998(91)451-95-73
+                    BOG'LANISH UCHUN: +998(93)185-54-55
                   </p>
                 </div>
+                {% else %}
+                <div class="mt-6 grid space-y-3">
+                  <p>
+                    <a class="inline-flex gap-x-2 text-white hover:text-gray-200 transition-all hover:pl-2" href="{% url 'accounts:update' %}">
+                      Profilni tahrirlash
+                    </a>
+                  </p>
+                  <p>
+                    <a class="inline-flex gap-x-2 text-white hover:text-gray-200 transition-all hover:pl-2" href="{% url 'accounts:logout' %}">
+                      Chiqish
+                    </a>
+                  </p>
+                  <p class="text-white hover:text-gray-200">
+                    BOG'LANISH UCHUN: +998(93)185-54-55
+                  </p>
+                </div>
+                {% endif %}
               </div>
               <div class="col-span-2">
                 <h4 class="font-semibold text-gray-100 uppercase">
                   Obuna bo'lish
                 </h4>
-                <form class="mt-6 grid space-y-3">
+                <form class="mt-6 grid space-y-3"  method="POST" action="{% url 'home:subscribe' %}">
+                  {% csrf_token %}
                   <div class="relative z-0 w-full mb-5 group">
-                    <input type="email" name="floating_email" id="floating_email"
+                    <input type="email" name="emailmanzil" id="floating_email"
                       class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600  focus:outline-none focus:ring-0 focus:border-login peer"
                       placeholder=" " required />
                     <label for="floating_email"

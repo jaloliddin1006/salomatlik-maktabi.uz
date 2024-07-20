@@ -69,7 +69,7 @@ class Resource(BaseModel):
     description = models.TextField(verbose_name='Tavsif')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
     author = models.CharField(max_length=100, verbose_name='Muallif', null=True, blank=True)
-    resource_type = models.ForeignKey(ResourceType, on_delete=models.SET_NULL, null=True, verbose_name='Resurs turi')
+    resource_type = models.ForeignKey(ResourceType, on_delete=models.SET_NULL, null=True, verbose_name='Resurs turi', related_name='resurslar')
     language = models.ForeignKey(Language, on_delete=models.SET_NULL, null=True, verbose_name='Til')
     country = models.CharField(max_length=30, verbose_name='Mamlakat', null=True, blank=True)
     year = models.PositiveIntegerField(verbose_name='Yil', null=True, blank=True)

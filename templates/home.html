@@ -12,21 +12,26 @@ home page
   <div class="mx-auto container relative z-0 px-4 2xl:px-0">
     <div class="flex gap-8 flex-col-reverse md:flex-row max-w-screen-xl mx-auto px-2 pt-10 pb-2 sm:pb-32 sm:pt-40">
       <div class="md:w-3/5 flex flex-col justify-center">
+        {% if user.is_authenticated %}
         <h1
           class="text-2xl sm:text-[3.5rem] font-black text-gray-900 text-center md:text-left md:w-10/12 sm:leading-[65px] leading-[35px]">
-          ONE WALLET TO dee e d ded RULE THEM ALL</h1>
+          
+          Assalomu aleykum hurmatli {{ user.first_name }} </h1>
+        {% else %}
+          <h3
+          class="text-2xl sm:text-[3.5rem] font-black text-gray-900 text-center md:text-left md:w-10/12 sm:leading-[55px] leading-[35px]">Assalomu aleykum hurmatli foydalanuvchi! </h3>
+        {% endif %}
         <h2
           class="md:w-8/12 my-4 text-center md:text-left md:my-8 text-gray-700 dark:text-gray-200 text-base lg:text-xl">
-          Do you want to control your expenses and be always aware of how much money you have spent?</h2>
+          Salomatlik maktabi nomli online platformamizga xush kelibsiz! Bu saytda siz o'zingiz uchun foydali bo'lishi mumkin bo'lgan tibbiyotga oid qimmatli ma'lumotlar manbaiga ega bo'lishingiz va tanishib chiqishingiz mumkin  </h2>
         <div class="w-full flex justify-center md:block">
-          <button
-            class="hover:bg-hover_login transition-colors bg-login py-2 px-5 lg:py-4 lg:px-10 rounded-3xl text-white text-sm md:text-lg f-f-p focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700">Learn
-            More</button>
+          <a href="{% url 'resources:resource-list' %}"><button
+            class="hover:bg-hover_login transition-colors bg-login py-2 px-5 lg:py-4 lg:px-10 rounded-3xl text-white text-sm md:text-lg f-f-p focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-700">Batafsil ma'lumot</button></a>
         </div>
       </div>
       <div class="w-full sm:w-2/5 h-64 md:h-auto m-auto flex items-center overflow-hidden">
         <img class="md:absolute md:w-1/2 md:-ml-28"
-          src="https://cdn.tuk.dev/assets/components/111220/Hero4/Device - Macbook Pro.png"
+          src="{% static 'img/medical.jpg' %}" style="width: 900px; height: 100%;"
           alt="Laptop with pivot page on screen" role="img" />
       </div>
     </div>
@@ -43,83 +48,28 @@ home page
   <div class="sm:my-10 my-5 mb-8 relative flex gap-5">
     <div class="grid main_category_wrap gap-5 justify-center items-center">
 
-      <a href="./cards.html" class="main_category relative">
-        <img src="https://cdn.globaldialog.ru/_/manager/files/571/77216e7d18/img-academy-2.jpg" alt="Notebook"
-          style="width:100%;">
-        <div class="content">
-          <h1>Heading</h1>
-        </div>
-      </a>
-      <a href="./cards.html" class="main_category relative">
-        <img src="https://cdn.globaldialog.ru/_/manager/files/571/77216e7d18/img-academy-2.jpg" alt="Notebook"
-          style="width:100%;">
-        <div class="content">
-          <h1>Heading</h1>
-        </div>
-      </a>
-      <a href="./cards.html" class="main_category relative">
-        <img src="https://cdn.globaldialog.ru/_/manager/files/571/77216e7d18/img-academy-2.jpg" alt="Notebook"
-          style="width:100%;">
-        <div class="content">
-          <h1>Heading</h1>
-        </div>
-      </a>
-      <a href="./cards.html" class="main_category relative">
-        <img src="https://cdn.globaldialog.ru/_/manager/files/571/77216e7d18/img-academy-2.jpg" alt="Notebook"
-          style="width:100%;">
-        <div class="content">
-          <h1>Heading</h1>
-        </div>
-      </a>
-      <a href="./cards.html" class="main_category relative">
-        <img src="https://cdn.globaldialog.ru/_/manager/files/571/77216e7d18/img-academy-2.jpg" alt="Notebook"
-          style="width:100%;">
-        <div class="content">
-          <h1>Heading</h1>
-        </div>
-      </a>
-      <a href="./cards.html" class="main_category relative">
-        <img src="https://cdn.globaldialog.ru/_/manager/files/571/77216e7d18/img-academy-2.jpg" alt="Notebook"
-          style="width:100%;">
-        <div class="content">
-          <h1>Heading Lorem ipsum dolor sit.</h1>
-        </div>
-      </a>
-      <a href="./cards.html" class="main_category relative">
-        <img src="https://cdn.globaldialog.ru/_/manager/files/571/77216e7d18/img-academy-2.jpg" alt="Notebook"
-          style="width:100%;">
-        <div class="content">
-          <h1>Heading</h1>
-        </div>
-      </a>
-      <a href="./cards.html" class="main_category relative">
-        <img src="https://cdn.globaldialog.ru/_/manager/files/571/77216e7d18/img-academy-2.jpg" alt="Notebook"
-          style="width:100%;">
-        <div class="content">
-          <h1>Heading</h1>
-        </div>
-      </a>
-      <a href="./cards.html" class="main_category relative">
-        <img src="https://cdn.globaldialog.ru/_/manager/files/571/77216e7d18/img-academy-2.jpg" alt="Notebook"
-          style="width:100%;">
-        <div class="content">
-          <h1>Heading</h1>
-        </div>
-      </a>
-      <a href="./cards.html" class="main_category relative">
-        <img src="https://cdn.globaldialog.ru/_/manager/files/571/77216e7d18/img-academy-2.jpg" alt="Notebook"
-          style="width:100%;">
-        <div class="content">
-          <h1>Heading</h1>
-        </div>
-      </a>
+
+
+      {% for each_category in ten_famous_categories %}
+        <a href="{% url 'resources:resource-list' %}?category={{each_category.slug}}" class="main_category relative">
+          <img src="{{ each_category.icon.url }}" alt="Category"
+            style="width:100%;">
+          <div class="content">
+            <h1>{{ each_category.name }}</h1>
+          </div>
+        </a>
+      {% endfor %}
+      
+
+
+      
     </div>
 
 
 
   </div>
   <div class="w-full my-10 flex items-center justify-center">
-    <a href="./cards.html"
+    <a href="{% url 'resources:resource-list' %}"
       class="px-8 py-3 text-sm font-medium text-center border border-gray-200 rounded-lg focus:outline-none text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:z-10 focus:ring-4 focus:ring-gray-100 inline-flex items-center justify-center gap-1">Ko'proq
       ko'rish
       <svg class="rtl:rotate-180 w-4 h-4 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="#fff"
@@ -136,62 +86,19 @@ home page
 
   <div class="slider">
     <div class="slide-track">
-      <a href="./cards.html" class="slide">
-        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/1.png" height="100" width="250" alt="" /> -->
-        <p>Adabiyotlar</p>
-      </a>
-      <a href="./cards.html" class="slide">
-        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/2.png" height="100" width="250" alt="" /> -->
-        <p>Mualliflar</p>
-      </a>
-      <a href="./cards.html" class="slide">
+      
+      {% for each_type in type_resources %}
+      <a href="{% url 'resources:resource-list' %}?resourceType={{each_type.id}}" class="slide">
         <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/3.png" height="100" width="250" alt="" /> -->
-        <p>Manaviyat va san'at</p>
+        <p>{{ each_type.name }}</p>
       </a>
-      <a href="./cards.html" class="slide">
-        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/4.png" height="100" width="250" alt="" /> -->
-        <p>Manaviyat va san'at</p>
+      {% endfor %}
+      {% for each_category in ten_famous_categories %}
+      <a href="{% url 'resources:resource-list' %}?category={{each_category.slug}}" class="slide">
+        <p>{{ each_category.name }}</p>
       </a>
-      <a href="./cards.html" class="slide">
-        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/5.png" height="100" width="250" alt="" /> -->
-        <p>Manaviyat va san'at</p>
-      </a>
-      <a href="./cards.html" class="slide">
-        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/6.png" height="100" width="250" alt="" /> -->
-        <p>Manaviyat va san'at</p>
-      </a>
-      <a href="./cards.html" class="slide">
-        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/7.png" height="100" width="250" alt="" /> -->
-        <p>Manaviyat va san'at</p>
-      </a>
-      <a href="./cards.html" class="slide">
-        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/1.png" height="100" width="250" alt="" /> -->
-        <p>Manaviyat va san'at</p>
-      </a>
-      <a href="./cards.html" class="slide">
-        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/2.png" height="100" width="250" alt="" /> -->
-        <p>Manaviyat va san'at</p>
-      </a>
-      <a href="./cards.html" class="slide">
-        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/3.png" height="100" width="250" alt="" /> -->
-        <p>Manaviyat va san'at</p>
-      </a>
-      <a href="./cards.html" class="slide">
-        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/4.png" height="100" width="250" alt="" /> -->
-        <p>Manaviyat va san'at</p>
-      </a>
-      <a href="./cards.html" class="slide">
-        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/5.png" height="100" width="250" alt="" /> -->
-        <p>Manaviyat va san'at</p>
-      </a>
-      <a href="./cards.html" class="slide">
-        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/6.png" height="100" width="250" alt="" /> -->
-        <p>Manaviyat va san'at</p>
-      </a>
-      <a href="./cards.html" class="slide">
-        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/7.png" height="100" width="250" alt="" /> -->
-        <p>Manaviyat va san'at</p>
-      </a>
+      {% endfor %}
+      
     </div>
   </div>
 </div>
@@ -201,42 +108,25 @@ home page
     <div>
       <img src="./img/g2.svg" alt="">
     </div>
-    <p>O'zbekiston Respublikasi oliy ta'lim va ilmiy tadqiqot muassasalarining yagona elektron kutubxona axborot
-      tizimi</p>
+    <p>Salomatlik maktabi nomli tibbiyotga oid majmualar to'plami platformasi</p>
     <p>
-      Elektron kutubxonada oliy ta'lim va ilmiy tadqiqot muassasalarining o'quv adabiyotlari, monografiyalari,
-      dissertatsiyalari va ilmiy maqolalari jamlangan</p>
+      Ushbu platformada tibbiyotga oid qimmatli ilmiy ma'lumotlar, kitoblar, jurnallar majmuasi jamlangan </p>
+      <a href="{% url 'resources:resource-list' %}">
     <button type="submit"
-      class="text-white bg-login hover:bg-hover_login focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base w-full sm:w-auto px-5 py-2.5 text-center">Batafsil</button>
+      class="text-white bg-login hover:bg-hover_login focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base w-full sm:w-auto px-5 py-2.5 text-center">Batafsil</button></a>
   </div>
-  <div class="grid_2 grid_box">
-    <div>
-      <img src="./img/g2.svg" alt="">
-    </div>
-    <h2>240351 adabiyotlar</h2>
-    <p>O'qituvchilar va ilmiy tadqiqotchilarning barcha maqolalari ro'yxati</p>
-  </div>
-  <div class="grid_3 grid_box">
-    <div>
-      <img src="./img/g3.svg" alt="">
-    </div>
-    <h2>240351 adabiyotlar</h2>
-    <p>O'qituvchilar va ilmiy tadqiqotchilarning barcha maqolalari ro'yxati</p>
-  </div>
-  <div class="grid_4 grid_box">
-    <div>
-      <img src="./img/g4.svg" alt="">
-    </div>
-    <h2>240351 adabiyotlar</h2>
-    <p>O'qituvchilar va ilmiy tadqiqotchilarning barcha maqolalari ro'yxati</p>
-  </div>
-  <div class="grid_5 grid_box">
-    <div>
-      <img src="./img/g5.svg" alt="">
-    </div>
-    <h2>240351 adabiyotlar</h2>
-    <p>O'qituvchilar va ilmiy tadqiqotchilarning barcha maqolalari ro'yxati</p>
-  </div>
+  {% for each_type in random_four_resource_types %}
+    {% if forloop.counter != 1 %}
+      <div class="grid_{{forloop.counter}} grid_box">
+        <div>
+          <img src="{% static 'img/g2.svg' %}" alt="">
+        </div>
+        <h2>{{ each_type.resurslar.count }} {{each_type.name}}lar</h2>
+        <p>Saytdagi mavjud {{ each_type.name }} to'plamlari </p>
+      </div>
+    {% endif %}
+  
+  {% endfor %}
 </section>
 
 <div class="sm:mt-0 mb-36 my-8">
@@ -244,62 +134,36 @@ home page
 
   <div class="slider">
     <div class="slide-track">
-      <a href="./cards.html" class="slide">
-        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/1.png" height="100" width="250" alt="" /> -->
-        <p>Adabiyotlar</p>
-      </a>
-      <a href="./cards.html" class="slide">
-        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/2.png" height="100" width="250" alt="" /> -->
-        <p>Mualliflar</p>
-      </a>
-      <a href="./cards.html" class="slide">
-        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/3.png" height="100" width="250" alt="" /> -->
-        <p>Manaviyat va san'at</p>
-      </a>
-      <a href="./cards.html" class="slide">
-        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/4.png" height="100" width="250" alt="" /> -->
-        <p>Manaviyat va san'at</p>
-      </a>
-      <a href="./cards.html" class="slide">
-        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/5.png" height="100" width="250" alt="" /> -->
-        <p>Manaviyat va san'at</p>
-      </a>
-      <a href="./cards.html" class="slide">
-        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/6.png" height="100" width="250" alt="" /> -->
-        <p>Manaviyat va san'at</p>
-      </a>
-      <a href="./cards.html" class="slide">
-        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/7.png" height="100" width="250" alt="" /> -->
-        <p>Manaviyat va san'at</p>
-      </a>
-      <a href="./cards.html" class="slide">
-        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/1.png" height="100" width="250" alt="" /> -->
-        <p>Manaviyat va san'at</p>
-      </a>
-      <a href="./cards.html" class="slide">
-        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/2.png" height="100" width="250" alt="" /> -->
-        <p>Manaviyat va san'at</p>
-      </a>
-      <a href="./cards.html" class="slide">
-        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/3.png" height="100" width="250" alt="" /> -->
-        <p>Manaviyat va san'at</p>
-      </a>
-      <a href="./cards.html" class="slide">
-        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/4.png" height="100" width="250" alt="" /> -->
-        <p>Manaviyat va san'at</p>
-      </a>
-      <a href="./cards.html" class="slide">
-        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/5.png" height="100" width="250" alt="" /> -->
-        <p>Manaviyat va san'at</p>
-      </a>
-      <a href="./cards.html" class="slide">
-        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/6.png" height="100" width="250" alt="" /> -->
-        <p>Manaviyat va san'at</p>
-      </a>
-      <a href="./cards.html" class="slide">
-        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/7.png" height="100" width="250" alt="" /> -->
-        <p>Manaviyat va san'at</p>
-      </a>
+      
+      {% for each_formula in random_20_formulalar %}
+        
+        <a href="{% url 'formula:detail' each_formula.pk %}" class="slide">
+          <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/1.png" height="100" width="250" alt="" /> -->
+          <p>{{ each_formula.name }}</p>
+        </a>
+      {% endfor %}
+      {% for each_formula in random_20_formulalar %}
+        
+        <a href="{% url 'formula:detail' each_formula.pk %}" class="slide">
+          <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/1.png" height="100" width="250" alt="" /> -->
+          <p>{{ each_formula.name }}</p>
+        </a>
+      {% endfor %}
+      {% for each_formula in random_20_formulalar %}
+        
+        <a href="{% url 'formula:detail' each_formula.pk %}" class="slide">
+          <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/1.png" height="100" width="250" alt="" /> -->
+          <p>{{ each_formula.name }}</p>
+        </a>
+      {% endfor %}
+      {% for each_formula in random_20_formulalar %}
+        
+        <a href="{% url 'formula:detail' each_formula.pk %}" class="slide">
+          <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/1.png" height="100" width="250" alt="" /> -->
+          <p>{{ each_formula.name }}</p>
+        </a>
+      {% endfor %}
+  
     </div>
   </div>
 </div>

@@ -29,7 +29,7 @@ class Formula(BaseModel):
     latex_data = models.TextField(default=FORMULA_DEFAULT, verbose_name='Latex Data')
     code = models.TextField(default=CODE_DEFOULT, verbose_name='Python Code')
     formula_img = models.ImageField(upload_to='formula/', null=True, blank=True)
-    file = models.FileField(upload_to='files/', null=True, blank=True)
+    # file = models.FileField(upload_to='files/', null=True, blank=True)
 
     def __str__(self):
         return self.name

@@ -2,10 +2,58 @@ from django.shortcuts import render
 from apps.resources.models import Category, Resource, ResourceType
 from django.views.generic import ListView, DetailView
 from django.db.models import Q 
+from django.views import View
 from django.core.paginator import Paginator
 # Create your views here.
 
+class ResourceTypeResourcesView(View):
+    pass
+    # paginate_by = 16
+    # PAGINATION_URL = ''
+    # def get(self, request, id):
+    #     r_type = ResourceType.objects.filter(is_active = True, id=id).first()
+        
+    #     resources = Resource.objects.filter(is_active = True, resource_type = r_type)
+    #     context={
+    #         'r_type':r_type,
+    #         'resources':resources,
+            
+    #     }
+    #     return render(request, 'resources.html', context)
+    
+    # def get_queryset(self):
+       
+    #     queryset = Resource.objects.filter(is_active=True).order_by('-id')  # Base queryset
 
+    #     # Get search query from request.GET (modify as needed)
+    #     search_query = self.request.GET.get('search', '')
+    #     if search_query:
+    #         self.PAGINATION_URL = f'&search={search_query}'  
+    #         queryset = queryset.filter(Q(title__icontains=search_query) | 
+    #                                    Q(description__icontains=search_query) | 
+    #                                    Q(author__icontains=search_query) | 
+    #                                    Q(keywords__icontains=search_query))
+
+    #     # Add additional filters based on request.GET parameters (modify as needed)
+    #     filter_by_category = self.request.GET.get('category', '')
+    #     if filter_by_category:
+    #         self.PAGINATION_URL += f'&category={filter_by_category}'  
+    #         queryset = queryset.filter(category__slug=filter_by_category)
+            
+            
+    #     filter_by_type = self.request.GET.get('resourceType', '')
+    #     if filter_by_type:
+    #         self.PAGINATION_URL += f'&resourceType={filter_by_type}'
+    #         queryset = queryset.filter(resource_type=filter_by_type)
+            
+            
+    #     filter_by_auditoriya = self.request.GET.get('auditoria', '')
+    #     if filter_by_auditoriya:
+    #         self.PAGINATION_URL += f'&auditoria={filter_by_auditoriya}'
+    #         queryset = queryset.filter(auditoria=filter_by_auditoriya)
+        
+    #     return queryset
+    
 class ResourceListView(ListView):
     model = Resource
     template_name = 'resources.html'
@@ -129,3 +177,27 @@ class DownloadFileView(APIView):
             return response
         except Resource.DoesNotExist:
             return Response({'message': "Hech qanday ma'lumot topilmadi."}, status=status.HTTP_404_NOT_FOUND)
+    
+class HomePageView(View):
+    def get(self, request):
+        famous_ten_categories = Category.objects.all()[:10]
+
+        context={
+            'famous_ten_categories':famous_ten_categories,
+        }
+
+        return render(request, 'home.html', context)
+
+
+class CategoryRecoursesView(View):
+    pass
+#     def get(self, request, id):
+#         ctg = Category.objects.get(id=id)
+#         category_resources = Resource.objects.all().filter(is_active=True, category=ctg)
+        
+#         context = {
+#             'ctg':ctg,
+#             'resources':category_resources,
+           
+#         }
+#         return render(request, 'resources.html', context)

@@ -1,10 +1,10 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views import View
 from django.views.generic import ListView, TemplateView
-from apps.home.forms import ContactForm
+from apps.home.forms import ContactForm, SubscribeForm
 from django.contrib import messages
 from apps.resources.models import Resource, ResourceType
-from apps.home.models import Favourite
+from apps.home.models import Favourite, Subscribe
 # Create your views here.
 from django.db.models import Q 
 from django.core.paginator import Paginator
@@ -35,9 +35,19 @@ class ContactPage(View):
         }
         messages.error(request, f'Message not sent: {form.errors}')
         return render(request, 'contact.html', context)
-    
-    
 
+class SubscribeView(View):
+    def post(self, request):
+        LAST_URL = request.META.get('HTTP_REFERER')        
+        data = request.POST
+        obuna = Subscribe()
+        print(obuna)
+        obuna.email = data.get('emailmanzil')
+        
+        obuna.save()
+        messages.success(self.request, 'Siz muvaffaqiyatli obuna bo\'ldingiz')
+        return redirect(LAST_URL)
+    
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
