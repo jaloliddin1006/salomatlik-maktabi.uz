@@ -38,7 +38,7 @@ class ContactPage(View):
 
 class SubscribeView(View):
     def post(self, request):
-        
+        LAST_URL = request.META.get('HTTP_REFERER')        
         data = request.POST
         obuna = Subscribe()
         print(obuna)
@@ -46,7 +46,7 @@ class SubscribeView(View):
         
         obuna.save()
         messages.success(self.request, 'Siz muvaffaqiyatli obuna bo\'ldingiz')
-        return redirect('home:index')
+        return redirect(LAST_URL)
     
 from rest_framework.views import APIView
 from rest_framework.response import Response

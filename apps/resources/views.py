@@ -7,18 +7,19 @@ from django.core.paginator import Paginator
 # Create your views here.
 
 class ResourceTypeResourcesView(View):
+    pass
     # paginate_by = 16
     # PAGINATION_URL = ''
-    def get(self, request, id):
-        r_type = ResourceType.objects.filter(is_active = True, id=id).first()
+    # def get(self, request, id):
+    #     r_type = ResourceType.objects.filter(is_active = True, id=id).first()
         
-        resources = Resource.objects.filter(is_active = True, resource_type = r_type)
-        context={
-            'r_type':r_type,
-            'resources':resources,
+    #     resources = Resource.objects.filter(is_active = True, resource_type = r_type)
+    #     context={
+    #         'r_type':r_type,
+    #         'resources':resources,
             
-        }
-        return render(request, 'resources.html', context)
+    #     }
+    #     return render(request, 'resources.html', context)
     
     # def get_queryset(self):
        
@@ -189,13 +190,14 @@ class HomePageView(View):
 
 
 class CategoryRecoursesView(View):
-    def get(self, request, id):
-        ctg = Category.objects.get(id=id)
-        category_resources = Resource.objects.all().filter(is_active=True, category=ctg)
+    pass
+#     def get(self, request, id):
+#         ctg = Category.objects.get(id=id)
+#         category_resources = Resource.objects.all().filter(is_active=True, category=ctg)
         
-        context = {
-            'ctg':ctg,
-            'resources':category_resources,
+#         context = {
+#             'ctg':ctg,
+#             'resources':category_resources,
            
-        }
-        return render(request, 'resources.html', context)
+#         }
+#         return render(request, 'resources.html', context)
