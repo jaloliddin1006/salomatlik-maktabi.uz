@@ -5,7 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('hidden_admin/', admin.site.urls),
     path('accounts/', include('apps.accounts.urls')),
     path('formula/', include('apps.formula.urls')),
     path('resources/', include('apps.resources.urls')),
