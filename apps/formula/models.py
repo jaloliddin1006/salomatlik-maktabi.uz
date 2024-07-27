@@ -21,6 +21,9 @@ def solution(a, b, c):
 
 FORMULA_DEFAULT = "x=(-b±√(b^2-4ac))/(2a)"
 
+Darajalar ={
+    
+}
 
 class Formula(BaseModel):
     name = models.CharField(max_length=255, unique=True, verbose_name='Formula Name')
