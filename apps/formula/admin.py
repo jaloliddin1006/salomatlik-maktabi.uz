@@ -1,5 +1,5 @@
 from django.contrib import admin
-from apps.formula.models import Formula
+from apps.formula.models import Formula, FunksionalData
 # import html safe
 from django.utils.safestring import mark_safe
     
@@ -16,3 +16,13 @@ class FormulaAdmin(admin.ModelAdmin):
     
     def get_code(self, obj):
         return mark_safe(f"<pre>{obj.code}</pre>")
+    
+    
+@admin.register(FunksionalData)
+class FunksionalDataAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'file', ]
+    list_display_links = ['name']
+    search_fields = ['name', 'file']
+    list_filter = ['name', 'file']
+    list_per_page = 10
+    list_max_show_all = 100

@@ -2,6 +2,7 @@ from django.db import models
 from ckeditor.fields import RichTextField
 from apps.common.models import BaseModel
 from apps.formula.utils import get_function_variables
+from django.utils.text import slugify
 
 
 CODE_DEFOULT = """# Agar qaysidir kutubxonadan foydalansangiz, ularni import qiling
@@ -21,9 +22,7 @@ def solution(a, b, c):
 
 FORMULA_DEFAULT = "x=(-b±√(b^2-4ac))/(2a)"
 
-Darajalar ={
-    
-}
+
 
 class Formula(BaseModel):
     name = models.CharField(max_length=255, unique=True, verbose_name='Formula Name')
@@ -46,3 +45,16 @@ class Formula(BaseModel):
             variables = get_function_variables(self.code)
             self.variables = variables
         super().save(*args, **kwargs)
+
+
+class FunksionalData(BaseModel):
+    name = models.CharField(max_length=150)
+    file = models.FileField(upload_to='funksional_datas/')
+    
+    def __str__(self) -> str:
+        return self.name
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)   
+        super().save(*args, **kwargs)
+             
