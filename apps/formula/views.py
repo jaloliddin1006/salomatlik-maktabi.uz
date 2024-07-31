@@ -176,3 +176,7 @@ class DownloadFileView(APIView):
                 ws[old_input[i]] = old_data[i]
             if i < len(new_input):
                 ws[new_input[i]] = new_data[i]
+
+class InformationView(View):
+    def get(self, request):
+        return render(request, 'information.html')
