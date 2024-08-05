@@ -3,8 +3,9 @@ from django.views import View
 from django.views.generic import ListView, TemplateView
 from apps.home.forms import ContactForm, SubscribeForm
 from django.contrib import messages
-from apps.resources.models import Resource, ResourceType
-from apps.home.models import Favourite, Subscribe
+from apps.resources.models import Resource, ResourceType, Category
+from apps.formula.models import Formula
+from apps.home.models import Favourite, Subscribe   
 # Create your views here.
 from django.db.models import Q 
 from django.core.paginator import Paginator
@@ -12,7 +13,16 @@ from django.core.paginator import Paginator
 
 class HomePageView(View):
     def get(self, request):
-        return render(request, 'home.html')
+        context = {
+            'range': range(4),
+            'ten_famous_categories':Category.objects.all().order_by('?')[:10],
+            'category_resources':Resource.objects.all().filter(),
+            'type_resources':ResourceType.objects.all(),
+            'random_four_resource_types':ResourceType.objects.all().order_by('?')[:5],
+            'random_20_formulalar':Formula.objects.all().order_by('?')[:20]
+        
+        }
+        return render(request, 'home.html', context)
     
     
 class ContactPage(View):

@@ -86,17 +86,19 @@ home page
 
   <div class="slider">
     <div class="slide-track">
+      {% for i in range %}
       
-      {% for each_type in type_resources %}
-      <a href="{% url 'resources:resource-list' %}?resourceType={{each_type.id}}" class="slide">
-        <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/3.png" height="100" width="250" alt="" /> -->
-        <p>{{ each_type.name }}</p>
-      </a>
+        {% for each_type in type_resources %}
+        <a href="{% url 'resources:resource-list' %}?resourceType={{each_type.id}}" class="slide">
+          <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/3.png" height="100" width="250" alt="" /> -->
+          <p>{{ each_type.name }}</p>
+        </a>
+        {% endfor %}
       {% endfor %}
       {% for each_category in ten_famous_categories %}
-      <a href="{% url 'resources:resource-list' %}?category={{each_category.slug}}" class="slide">
-        <p>{{ each_category.name }}</p>
-      </a>
+        <a href="{% url 'resources:resource-list' %}?category={{each_category.slug}}" class="slide">
+          <p>{{ each_category.name }}</p>
+        </a>
       {% endfor %}
       
     </div>
@@ -135,34 +137,16 @@ home page
   <div class="slider">
     <div class="slide-track">
       
-      {% for each_formula in random_20_formulalar %}
-        
-        <a href="{% url 'formula:detail' each_formula.pk %}" class="slide">
-          <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/1.png" height="100" width="250" alt="" /> -->
-          <p>{{ each_formula.name }}</p>
-        </a>
+      {% for i in range %}
+        {% for each_formula in random_20_formulalar %}
+          
+          <a href="{% url 'formula:detail' each_formula.pk %}" class="slide">
+            <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/1.png" height="100" width="250" alt="" /> -->
+            <p>{{ each_formula.name }}</p>
+          </a>
+        {% endfor %}
       {% endfor %}
-      {% for each_formula in random_20_formulalar %}
-        
-        <a href="{% url 'formula:detail' each_formula.pk %}" class="slide">
-          <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/1.png" height="100" width="250" alt="" /> -->
-          <p>{{ each_formula.name }}</p>
-        </a>
-      {% endfor %}
-      {% for each_formula in random_20_formulalar %}
-        
-        <a href="{% url 'formula:detail' each_formula.pk %}" class="slide">
-          <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/1.png" height="100" width="250" alt="" /> -->
-          <p>{{ each_formula.name }}</p>
-        </a>
-      {% endfor %}
-      {% for each_formula in random_20_formulalar %}
-        
-        <a href="{% url 'formula:detail' each_formula.pk %}" class="slide">
-          <!-- <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/557257/1.png" height="100" width="250" alt="" /> -->
-          <p>{{ each_formula.name }}</p>
-        </a>
-      {% endfor %}
+    
   
     </div>
   </div>
