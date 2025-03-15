@@ -602,3 +602,64 @@ body{
     padding: 10px;
   }
 }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f4f7f9;
+}
+
+.contact-from-area {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.input-style input,
+.textarea-style textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: all 0.3s ease-in-out;
+}
+
+.input-style input:focus,
+.textarea-style textarea:focus {
+  border-color: #007bff;
+  box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.2);
+  outline: none;
+}
+
+.textarea-style textarea {
+  resize: none;
+  height: 120px;
+}
+
+button.submit {
+  background: #007bff;
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+button.submit:hover {
+  background: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .contact-from-area {
+      padding: 15px;
+  }
+}

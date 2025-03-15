@@ -46,6 +46,27 @@ class ContactPage(View):
         messages.error(request, f'Message not sent: {form.errors}')
         return render(request, 'contact.html', context)
 
+class Chat(View):
+    def get(self, request):
+        form = ContactForm()
+        context = {
+            'form': form
+        }
+        return render(request, 'chat.html', context)
+    
+    def post(self, request):
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Message sent successfully')
+            return redirect('home:index')
+        
+        context = {
+            'form': form
+        }
+        messages.error(request, f'Message not sent: {form.errors}')
+        return render(request, 'chat.html', context)
+
 class SubscribeView(View):
     def post(self, request):
         LAST_URL = request.META.get('HTTP_REFERER')        
