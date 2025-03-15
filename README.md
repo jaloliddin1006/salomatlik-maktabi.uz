@@ -4,3 +4,5 @@
 
 #
 run as DEBUG=False then run this code `python manage.py collectstatic`
+
+
