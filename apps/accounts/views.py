@@ -9,7 +9,6 @@ from datetime import datetime
 from apps.accounts.utilits import send_mail_code
 # Create your views here.
 
-
 class UserRegisterView(View):
     form_class = UserRegisterForm
     def get(self, request):
@@ -32,7 +31,6 @@ class UserRegisterView(View):
         }
         return render(request, 'accounts/register.html', context)
     
-
 class LoginView(View):
     form_class = LoginForm
     
@@ -75,7 +73,6 @@ class LogOutView(View):
             return redirect(REFFERER)
         return redirect('home:index')
 
-
 class UpdateUserView(View):
     form_class = UpdateUserForm
     def get(self , request):
@@ -98,8 +95,7 @@ class UpdateUserView(View):
         
         messages.error(request, user_form.errors)
         return render(request, 'accounts/update.html', {'form':user_form})
-    
-    
+     
 class PasswordResetView(View):
     form_class = ResetPasswordForm
     def get(self, request):
@@ -143,6 +139,4 @@ class UpdatePasswordView(View):
             messages.success(request, 'Parol muvaffaqiyatli yangilandi')
             return redirect('home:index')
         messages.error(request, user_form.errors)
-        return render(request, 'accounts/update_password.html', {'form':user_form})
-
-         
+        return render(request, 'accounts/update_password.html', {'form':user_form})         
