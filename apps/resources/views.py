@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from apps.resources.models import Category, Resource, ResourceType
 from django.views.generic import ListView, DetailView
-from django.db.models import Q, F
+from django.db.models import Q
 from django.views import View
 from django.core.paginator import Paginator
 from .models import Resource
@@ -142,7 +142,14 @@ class ResourceDetailView(DetailView):
             favorites = []
         context['favorites'] = favorites
         return context
-    
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.views += 1
+        self.object.save()
+        context = self.get_context_data(object=self.object)
+        context['other_news'] = Resource.objects.exclude(slug=self.object.slug).order_by('-views')[:3]
+        return self.render_to_response(context)
     
 from rest_framework.views import APIView
 from rest_framework.response import Response

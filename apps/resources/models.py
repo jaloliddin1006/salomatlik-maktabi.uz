@@ -98,7 +98,7 @@ class Resource(BaseModel):
             watermarked_pdf = add_watermark(self.original_file, 'Salomatlik Maktabi')
             watermarked_content = ContentFile(watermarked_pdf.read())   
             self.watermarked_file.save(f"{self.original_file.name.split('/')[-1]}", watermarked_content)
-  
+            
     class Meta:
         verbose_name = 'Resurs'
         verbose_name_plural = 'Resurslar'
