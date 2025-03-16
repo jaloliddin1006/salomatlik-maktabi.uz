@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import HomePageView, ContactPage, MyFavouriteView, AddOrRemoveFavourite, PremiumPage, SubscribeView
+from .views import HomePageView, ContactPage, MyFavouriteView, AddOrRemoveFavourite, PremiumPage, SubscribeView,ChatBotView
 
 app_name = "home"
 urlpatterns = [
@@ -8,6 +8,8 @@ urlpatterns = [
     path('my-favourite/', MyFavouriteView.as_view(), name='my-favourite'),
     path('api/add-or-remove-favourite/', AddOrRemoveFavourite.as_view(), name='add-or-remove-favourite'),
     path('premium/', PremiumPage.as_view(), name='premium'),
-    path('subs/', SubscribeView.as_view(), name='subscribe')
+    path('subs/', SubscribeView.as_view(), name='subscribe'),
+    path("chatbot/", ChatBotView.as_view(), name="chatbot"),
+    
 
 ]

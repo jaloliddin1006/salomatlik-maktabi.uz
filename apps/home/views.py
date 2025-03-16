@@ -163,3 +163,52 @@ class PremiumPage(View):
         context = {
         }
         return render(request, 'premium.html', context)
+    
+import os
+from django.http import JsonResponse
+from django.shortcuts import render
+from django.views import View
+import openai
+
+class DefonicAssistant:
+    def __init__(self, api_key: str, base_url: str = "https://api.groq.com/openai/v1"):
+        self.client = openai.OpenAI(
+            base_url=base_url, 
+            api_key=api_key
+        )
+
+    def get_response(self, user_input: str, model: str = "llama-3.3-70b-versatile") -> str:
+        chat_completion = self.client.chat.completions.create(
+            messages=[
+                {"role": "system", "content": (
+                        "You are Defonic, an AI assistant for 'Salomatlik Maktabi' developed by the ICT JOBS team."
+                        "You must only respond in Uzbek (Latin script) and stay strictly within the medical field."
+                        "If a question is unrelated to healthcare, politely inform the user that you can only assist with medical topics."
+                    )},
+                {"role": "user", "content": user_input},
+            ],
+            model=model,
+        )
+        return chat_completion.choices[0].message.content
+
+
+class ChatBotView(View):
+    template_name = "chatbot.html"
+    assistant = DefonicAssistant(api_key=os.environ.get("GROQ_API_KEY", "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"))
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request):
+        user_message = request.POST.get("message", "")
+
+        if not user_message:
+            return JsonResponse({"error": "Xabar bo'sh bo'lishi mumkin emas"}, status=400)
+
+        try:
+            bot_reply = self.assistant.get_response(user_message)
+        except Exception as e:
+            bot_reply = "Kechirasiz, serverda xatolik yuz berdi."
+
+        return JsonResponse({"response": bot_reply})
+
