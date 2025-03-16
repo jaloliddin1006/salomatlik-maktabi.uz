@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'apps.common',
     'apps.resources',
     'apps.formula',
-
 ]
 
 MIDDLEWARE = [

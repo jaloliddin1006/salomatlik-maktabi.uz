@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from apps.resources.models import Category, Resource, ResourceType
 from django.views.generic import ListView, DetailView
-from django.db.models import Q 
+from django.db.models import Q, F
 from django.views import View
 from django.core.paginator import Paginator
+from .models import Resource
 # Create your views here.
 
 class ResourceTypeResourcesView(View):
