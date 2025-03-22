@@ -13,3 +13,8 @@ urlpatterns = [
     # path('resource_type/<int:id>/', views.ResourceTypeResourcesView.as_view(), name='resource-type')
        
 ]
+
+from django.conf.urls import handler404
+from .views import custom_404_view
+
+handler404 = custom_404_view
