@@ -121,12 +121,23 @@ class ResourceListView(ListView):
 
         return context
     
-    
+from django.db.models import F
+
 class ResourceDetailView(DetailView):
     model = Resource
     template_name = 'resource_detail.html'
     context_object_name = 'resource'
     lookup_field = 'slug'
+    
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if request.user.is_authenticated:
+            viewed_resources = request.session.get('viewed_resources', set())
+            if str(self.object.id) not in viewed_resources:
+                Resource.objects.filter(id=self.object.id).update(views=F('views') + 1)
+                viewed_resources.add(str(self.object.id))
+                request.session['viewed_resources'] = list(viewed_resources)
+        return super().dispatch(request, *args, **kwargs)
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
