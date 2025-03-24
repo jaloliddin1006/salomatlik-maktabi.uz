@@ -14,7 +14,14 @@ urlpatterns = [
        
 ]
 
-from django.conf.urls import handler404
-from .views import custom_404_view
+from django.shortcuts import render
+from django.http import Http404
 
-handler404 = custom_404_view
+def my_view(request):
+    raise Http404  
+
+def custom_404_view(request, exception):
+    return render(request, '404.html', status=404)
+
+
+handler404 = "apps.resources.views.custom_404_view"
