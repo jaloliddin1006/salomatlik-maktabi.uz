@@ -132,7 +132,7 @@ class ResourceDetailView(DetailView):
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
         if request.user.is_authenticated:
-            viewed_resources = request.session.get('viewed_resources', set())
+            viewed_resources = set(request.session.get('viewed_resources', []))
             if str(self.object.id) not in viewed_resources:
                 Resource.objects.filter(id=self.object.id).update(views=F('views') + 1)
                 viewed_resources.add(str(self.object.id))
