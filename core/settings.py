@@ -13,6 +13,7 @@ SECRET_KEY = 'django-insecure-476-2%-51k&8k+&5b3^+!ulm*9^v=((+ci%41&f5dp^@c)!a+=
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+DEBUG_PROPAGATE_EXCEPTIONS = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'apps.resources.middleware.Force404Middleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
