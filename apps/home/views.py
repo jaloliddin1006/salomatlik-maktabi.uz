@@ -211,4 +211,54 @@ class ChatBotView(View):
             bot_reply = "Kechirasiz, serverda xatolik yuz berdi."
 
         return JsonResponse({"response": bot_reply})
+    
+from django.views import View
+from django.http import JsonResponse
+import json
+
+class BloodAIView(View):
+    template_name = "bloodAI.html"
+    
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request):
+        try:
+            data = json.loads(request.body)  # JSON formatdagi ma'lumotni o‘qish
+            systolic = int(data.get("systolic", 0))
+            diastolic = int(data.get("diastolic", 0))
+
+            if systolic == 0 or diastolic == 0:
+                return JsonResponse({"response": "Iltimos, ikkala qiymatni ham kiriting!"})
+
+            if systolic < 90 or diastolic < 60:
+                response = "❗ Qon bosimingiz juda past! (Gipotoniya) Shifokorga murojaat qiling."
+
+            elif 90 <= systolic <= 119 and 60 <= diastolic <= 79:
+                response = "✅ Qon bosimingiz normal. Salomat bo‘ling!"
+
+            elif 120 <= systolic <= 129 and diastolic < 80:
+                response = "⚠️ Sistolik bosimingiz biroz yuqoriroq, lekin diastolik bosimingiz normal. Profilaktika choralarini ko‘ring."
+
+            elif 130 <= systolic <= 139 or 80 <= diastolic <= 89:
+                response = "⚠️ 1-darajali gipertoniya (Yuqori qon bosimi). Sog‘lom turmush tarzini yuriting va shifokor bilan maslahat qiling."
+
+            elif 140 <= systolic <= 179 or 90 <= diastolic <= 119:
+                response = "❗ 2-darajali gipertoniya. Darhol shifokorga murojaat qiling!"
+
+            elif systolic >= 180 or diastolic >= 120:
+                response = "🚨 Katta xavf! (Gipertoniya krizisi) Tez yordam chaqiring!"
+
+            else:
+                response = "⚠️ Noto‘g‘ri ma‘lumot kiritildi. Iltimos, raqamlarni tekshirib qayta kiriting!"
+
+
+
+            return JsonResponse({"response": response})
+
+        except ValueError:
+            return JsonResponse({"response": "Iltimos, faqat raqam kiriting!"})
+    
+
+
 
