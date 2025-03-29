@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import HomePageView, ContactPage, MyFavouriteView, AddOrRemoveFavourite, PremiumPage, SubscribeView,ChatBotView
+from .views import HomePageView, ContactPage, MyFavouriteView, AddOrRemoveFavourite, PremiumPage, SubscribeView,ChatBotView,BloodAIView
 
 app_name = "home"
 urlpatterns = [
@@ -10,6 +10,7 @@ urlpatterns = [
     path('premium/', PremiumPage.as_view(), name='premium'),
     path('subs/', SubscribeView.as_view(), name='subscribe'),
     path("chatbot/", ChatBotView.as_view(), name="chatbot"),
+    path("blood-ai/", BloodAIView.as_view(), name="blood_ai"),
     
 
 ]
