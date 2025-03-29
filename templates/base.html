@@ -311,60 +311,60 @@
                   <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">Salomatlik
                     maktabi</span>
                 </a>
-                <p class="text-white mt-6">
+                <p class="text-white mt-6 " >
                   Salomatlik maktabi nomli online platformamizga xush kelibsiz! Bu saytda siz o'zingiz uchun foydali bo'lishi mumkin bo'lgan tibbiyotga oid qimmatli ma'lumotlar manbaiga ega bo'lishingiz va tanishib chiqishingiz mumkin
                 </p>
               </div>
               <div class="col-span-1">
-                <h4 class="font-semibold text-gray-100 uppercase">
+                <h4 class="font-semibold text-gray-100 uppercase md:hover:text-green-400">
                   Muhim linklar
                 </h4>
                 <div class="mt-6 grid space-y-3">
                   <p>
                     <a href="/"
-                      class="inline-flex gap-x-2 transition-all text-white hover:text-gray-200 hover:pl-2">
+                      class="inline-flex gap-x-2 transition-all text-white hover:text-gray-200 hover:pl-2 hover:no-underline" >
                       Asosiy sahifa
                     </a>
                   </p>
                   <p>
                     <a href="{% url 'resources:resource-list' %}"
-                      class="inline-flex gap-x-2 text-white hover:text-gray-200 transition-all hover:pl-2">
+                      class="inline-flex gap-x-2 text-white hover:text-gray-200 transition-all hover:pl-2 hover:no-underline">
                       Qo'llanmalar
                     </a>
                   </p>
                   <p>
                     <a href="{% url 'formula:formula' %}"
-                      class="inline-flex gap-x-2 text-white hover:text-gray-200 transition-all hover:pl-2">
+                      class="inline-flex gap-x-2 text-white hover:text-gray-200 transition-all hover:pl-2 hover:no-underline">
                       Formula
                     </a>
                   </p>
                   <p>
                     <a href="{% url 'formula:funksional-holat' %}"
-                      class="inline-flex gap-x-2 text-white hover:text-gray-200 transition-all hover:pl-2">
+                      class="inline-flex gap-x-2 text-white hover:text-gray-200 transition-all hover:pl-2 hover:no-underline">
                       Funksional holat
                     </a>
                   </p>
                   <p>
                     <a href="{% url 'home:contact' %}"
-                      class="inline-flex gap-x-2 text-white hover:text-gray-200 transition-all hover:pl-2">
+                      class="inline-flex gap-x-2 text-white hover:text-gray-200 transition-all hover:pl-2 hover:no-underline">
                       Aloqa
                     </a>
                   </p>
                 </div>
               </div>
               <div class="col-span-1">
-                <h4 class="font-semibold text-gray-100 uppercase">
+                <h4 class="font-semibold text-gray-100 uppercase md:hover:text-green-400">
                   Foydalanish uchun
                 </h4>
                 {% if not user.is_authenticated %}
                 <div class="mt-6 grid space-y-3">
                   <p>
-                    <a class="inline-flex gap-x-2 text-white hover:text-gray-200 transition-all hover:pl-2" href="{% url 'accounts:register' %}">
+                    <a class="inline-flex gap-x-2 text-white hover:text-gray-200 transition-all hover:pl-2 hover:no-underline" href="{% url 'accounts:register' %}">
                       Ro'yxatdan o'tish
                     </a>
                   </p>
                   <p>
-                    <a class="inline-flex gap-x-2 text-white hover:text-gray-200 transition-all hover:pl-2" href="{% url 'accounts:login' %}">
+                    <a class="inline-flex gap-x-2 text-white hover:text-gray-200 transition-all hover:pl-2 hover:no-underline" href="{% url 'accounts:login' %}">
                       Kirish
                     </a>
                   </p>
@@ -375,12 +375,12 @@
                 {% else %}
                 <div class="mt-6 grid space-y-3">
                   <p>
-                    <a class="inline-flex gap-x-2 text-white hover:text-gray-200 transition-all hover:pl-2" href="{% url 'accounts:update' %}">
+                    <a class="inline-flex gap-x-2 text-white hover:text-gray-200 transition-all hover:pl-2 hover:no-underline" href="{% url 'accounts:update' %}">
                       Profilni tahrirlash
                     </a>
                   </p>
                   <p>
-                    <a class="inline-flex gap-x-2 text-white hover:text-gray-200 transition-all hover:pl-2" href="{% url 'accounts:logout' %}">
+                    <a class="inline-flex gap-x-2 text-white hover:text-gray-200 transition-all hover:pl-2 hover:no-underline" href="{% url 'accounts:logout' %}">
                       Chiqish
                     </a>
                   </p>
@@ -391,7 +391,7 @@
                 {% endif %}
               </div>
               <div class="col-span-2">
-                <h4 class="font-semibold text-gray-100 uppercase">
+                <h4 class="font-semibold text-gray-100 uppercase md:hover:text-green-400">
                   Obuna bo'lish
                 </h4>
                 <form class="mt-6 grid space-y-3"  method="POST" action="{% url 'home:subscribe' %}">
@@ -401,10 +401,10 @@
                       class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600  focus:outline-none focus:ring-0 focus:border-login peer"
                       placeholder=" " required />
                     <label for="floating_email"
-                      class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-login  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email</label>
+                      class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-login  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"><b><i>Email</i></b></label>
                   </div>
                   <button type="submit"
-                    class="text-white bg-login hover:hover_login focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm min-w-36 px-4 py-2.5 text-center">Jo'natish</button>
+                    class="text-white bg-login hover:text-gray-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm min-w-36 px-4 py-2.5 text-center">Jo'natish</button>
                 </form>
               </div>
             </div>
